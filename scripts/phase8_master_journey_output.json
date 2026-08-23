@@ -1,0 +1,64 @@
+{
+  "session_id": "e694ce65-38c7-4e4b-981c-f99b6c6908f9",
+  "added_skills": [
+    "Python",
+    "SQL",
+    "Machine Learning",
+    "Statistical Analysis"
+  ],
+  "github_verified": [
+    "OpenSCAD",
+    "C",
+    "C++"
+  ],
+  "target_role": "Data Scientists",
+  "related_roles": [
+    {
+      "onet_soc_code": "15-2041.00",
+      "title": "Statisticians",
+      "index": 1,
+      "relatedness_tier": "Primary-Short",
+      "market_median_salary_lpa": null
+    },
+    {
+      "onet_soc_code": "43-9111.00",
+      "title": "Statistical Assistants",
+      "index": 2,
+      "relatedness_tier": "Primary-Short",
+      "market_median_salary_lpa": null
+    },
+    {
+      "onet_soc_code": "13-2099.01",
+      "title": "Financial Quantitative Analysts",
+      "index": 3,
+      "relatedness_tier": "Primary-Short",
+      "market_median_salary_lpa": null
+    },
+    {
+      "onet_soc_code": "15-2031.00",
+      "title": "Operations Research Analysts",
+      "index": 4,
+      "relatedness_tier": "Primary-Short",
+      "market_median_salary_lpa": null
+    },
+    {
+      "onet_soc_code": "19-1029.01",
+      "title": "Bioinformatics Scientists",
+      "index": 5,
+      "relatedness_tier": "Primary-Short",
+      "market_median_salary_lpa": null
+    }
+  ],
+  "initial_path_length": 8,
+  "completed_history": [
+    "Power BI",
+    "Microsoft Excel",
+    "AWS",
+    "Amazon EC2",
+    "Amazon S3",
+    "Apache Hadoop",
+    "Amazon Redshift",
+    "Alteryx"
+  ],
+  "is_fully_qualified": true
+}

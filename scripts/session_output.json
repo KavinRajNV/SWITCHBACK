@@ -1,0 +1,520 @@
+{
+  "session_id": "e5e65e7a-40af-4dfd-9ab8-692251178516",
+  "added_skills": [
+    "Python",
+    "SQL",
+    "Machine Learning",
+    "Statistical Analysis"
+  ],
+  "github": {
+    "status": "success",
+    "github_username": "torvalds",
+    "languages_detected": {
+      "OpenSCAD": 1,
+      "C": 10,
+      "C++": 1
+    },
+    "verified_skills": [
+      "OpenSCAD",
+      "C",
+      "C++"
+    ],
+    "total_current_skills": 7
+  },
+  "role": "Data Scientists",
+  "path": {
+    "session_id": "e5e65e7a-40af-4dfd-9ab8-692251178516",
+    "target_occupation_soc_code": "15-2051.00",
+    "target_occupation_title": "Data Scientists",
+    "is_fully_qualified": false,
+    "path_length": 8,
+    "milestones": [
+      {
+        "step_number": 1,
+        "skill": "Power BI",
+        "cost": 0.2069,
+        "reachable_via": "Python",
+        "is_essential": true,
+        "explanation": "Acquiring Power BI ranks #178 out of 265 skills by market salary impact (specialized technical capability, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "DP-900 Azure Data Fundamentals Exam Prep In One Day",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/dp900-azure/",
+            "price": null,
+            "rating": 4.525393
+          },
+          {
+            "title": "PowerBI Zero to Hero",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/powerbi-hero/",
+            "price": null,
+            "rating": 4.456744
+          },
+          {
+            "title": "Snowflake[A-Z] Zero to Hero Masterclass(Core+SQL+API+Visual)",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/snowflake-zero-to-hero-masterclass/",
+            "price": null,
+            "rating": 4.403757
+          }
+        ]
+      },
+      {
+        "step_number": 2,
+        "skill": "Microsoft Excel",
+        "cost": 0.2289,
+        "reachable_via": "Machine Learning",
+        "is_essential": true,
+        "explanation": "Acquiring Microsoft Excel ranks #145 out of 265 skills by market salary impact (specialized technical capability, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "Python Mega Course: Learn Python in 60 Days, Build 20 Apps",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/the-python-mega-course/",
+            "price": null,
+            "rating": 4.6334023
+          },
+          {
+            "title": "Rest API Testing (Automation) from Scratch-Rest Assured Java",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/rest-api-automation-testing-rest-assured/",
+            "price": null,
+            "rating": 4.6326127
+          },
+          {
+            "title": "Data Science A-Z: Hands-On Exercises & ChatGPT Prize [2024]",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/datascience/",
+            "price": null,
+            "rating": 4.5716743
+          }
+        ]
+      },
+      {
+        "step_number": 3,
+        "skill": "AWS",
+        "cost": 0.316,
+        "reachable_via": "Python",
+        "is_essential": true,
+        "explanation": "Acquiring AWS ranks #4 out of 265 skills by market salary impact (top-tier high-impact requirement, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "Python for Data Science and Machine Learning Bootcamp",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/python-for-data-science-and-machine-learning-bootcamp/",
+            "price": null,
+            "rating": 4.5876036
+          },
+          {
+            "title": "The Complete Android N Developer Course",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/complete-android-n-developer-course/",
+            "price": null,
+            "rating": 3.6403563
+          },
+          {
+            "title": "Spark and Python for Big Data with PySpark",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/spark-and-python-for-big-data-with-pyspark/",
+            "price": null,
+            "rating": 4.515277
+          }
+        ]
+      },
+      {
+        "step_number": 4,
+        "skill": "Amazon EC2",
+        "cost": 0.3092,
+        "reachable_via": "AWS",
+        "is_essential": true,
+        "explanation": "Acquiring Amazon EC2 ranks #16 out of 265 skills by market salary impact (key industry skill requirement, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "Python for Data Science and Machine Learning Bootcamp",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/python-for-data-science-and-machine-learning-bootcamp/",
+            "price": null,
+            "rating": 4.5876036
+          },
+          {
+            "title": "Spark and Python for Big Data with PySpark",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/spark-and-python-for-big-data-with-pyspark/",
+            "price": null,
+            "rating": 4.515277
+          },
+          {
+            "title": "Learn DevOps: Infrastructure Automation With Terraform",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/learn-devops-infrastructure-automation-with-terraform/",
+            "price": null,
+            "rating": 4.3594337
+          }
+        ]
+      },
+      {
+        "step_number": 5,
+        "skill": "Amazon S3",
+        "cost": 0.3129,
+        "reachable_via": "AWS",
+        "is_essential": true,
+        "explanation": "Acquiring Amazon S3 ranks #18 out of 265 skills by market salary impact (key industry skill requirement, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "GitLab CI/CD: Pipelines, CI/CD and DevOps for Beginners",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/gitlab-ci-pipelines-ci-cd-and-devops-for-beginners/",
+            "price": null,
+            "rating": 4.5846415
+          },
+          {
+            "title": "Jenkins, From Zero To Hero: Become a DevOps Jenkins Master",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/jenkins-from-zero-to-hero/",
+            "price": null,
+            "rating": 4.3129897
+          },
+          {
+            "title": "Terraform for the Absolute Beginners with Labs",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/terraform-for-the-absolute-beginners/",
+            "price": null,
+            "rating": 4.6015234
+          }
+        ]
+      },
+      {
+        "step_number": 6,
+        "skill": "Apache Hadoop",
+        "cost": 0.4071,
+        "reachable_via": "SQL",
+        "is_essential": true,
+        "explanation": "Acquiring Apache Hadoop ranks #23 out of 265 skills by market salary impact (key industry skill requirement, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "Taming Big Data with Apache Spark and Python - Hands On!",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/taming-big-data-with-apache-spark-hands-on/",
+            "price": null,
+            "rating": 4.493032
+          },
+          {
+            "title": "PySpark - Apache Spark Programming in Python for beginners",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/apache-spark-programming-in-python-for-beginners/",
+            "price": null,
+            "rating": 4.534483
+          },
+          {
+            "title": "GCP: Complete Google Data Engineer and Cloud Architect Guide",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/gcp-data-engineer-and-cloud-architect/",
+            "price": null,
+            "rating": 3.1155813
+          }
+        ]
+      },
+      {
+        "step_number": 7,
+        "skill": "Amazon Redshift",
+        "cost": 0.4698,
+        "reachable_via": "AWS",
+        "is_essential": true,
+        "explanation": "Acquiring Amazon Redshift ranks #17 out of 265 skills by market salary impact (key industry skill requirement, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "AWS Certified Machine Learning Specialty MLS-C01 [2024]",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/aws-machine-learning-a-complete-guide-with-python/",
+            "price": null,
+            "rating": 4.561167
+          },
+          {
+            "title": "Mastering AWS Glue, QuickSight, Athena & Redshift Spectrum",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/aws-serverless-glue-redshift-spectrum-athena-quicksight-training/",
+            "price": null,
+            "rating": 4.2979693
+          },
+          {
+            "title": "Mastering Amazon Redshift Development & Administration",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/redshift-aws-amazon-development-administration-analytics-datawarehouse/",
+            "price": null,
+            "rating": 4.773784
+          }
+        ]
+      },
+      {
+        "step_number": 8,
+        "skill": "Alteryx",
+        "cost": 0.6017,
+        "reachable_via": "Power BI",
+        "is_essential": true,
+        "explanation": "Acquiring Alteryx ranks #15 out of 265 skills by market salary impact (key industry skill requirement, average impact: \u20b90.25L).",
+        "free_courses": [],
+        "paid_courses": [
+          {
+            "title": "Alteryx Bootcamp",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/alteryx-bootcamp/",
+            "price": null,
+            "rating": 4.5991364
+          },
+          {
+            "title": "Alteryx Designer Core Certification Prep and Practice Tests",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/alteryx-designer-core-certification-prep/",
+            "price": null,
+            "rating": 4.3242497
+          },
+          {
+            "title": "Alteryx Designer Core Certification Mega Bundle",
+            "source": "udemy_large",
+            "url": "https://www.udemy.com/course/alteryx-designer-core-certification-bootcamp/",
+            "price": null,
+            "rating": 4.7939796
+          }
+        ]
+      }
+    ],
+    "owned_skill_contributions": [
+      {
+        "skill": "C",
+        "contribution_lpa": -0.1057,
+        "explanation": "Your C profile signals are associated with a slight market adjustment of -\u20b90.11L relative to general role averages."
+      },
+      {
+        "skill": "C++",
+        "contribution_lpa": 0.0,
+        "explanation": "Your C++ experience provides core foundational competency with a neutral direct salary adjustment (+\u20b90.00L)."
+      },
+      {
+        "skill": "Machine Learning",
+        "contribution_lpa": 0.384,
+        "explanation": "Your Machine Learning experience is contributing an estimated +\u20b90.38L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Python",
+        "contribution_lpa": -0.1634,
+        "explanation": "Your Python profile signals are associated with a slight market adjustment of -\u20b90.16L relative to general role averages."
+      },
+      {
+        "skill": "SQL",
+        "contribution_lpa": 0.2821,
+        "explanation": "Your SQL experience is contributing an estimated +\u20b90.28L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Statistical Analysis",
+        "contribution_lpa": -0.0578,
+        "explanation": "Your Statistical Analysis profile signals are associated with a slight market adjustment of -\u20b90.06L relative to general role averages."
+      }
+    ],
+    "elevation_profile": [
+      {
+        "step": 0,
+        "skill": "Baseline (Current Skills)",
+        "cumulative_predicted_salary_lpa": 11.45
+      },
+      {
+        "step": 1,
+        "skill": "Power BI",
+        "cumulative_predicted_salary_lpa": 13.89
+      },
+      {
+        "step": 2,
+        "skill": "Microsoft Excel",
+        "cumulative_predicted_salary_lpa": 14.81
+      },
+      {
+        "step": 3,
+        "skill": "AWS",
+        "cumulative_predicted_salary_lpa": 15.13
+      },
+      {
+        "step": 4,
+        "skill": "Amazon EC2",
+        "cumulative_predicted_salary_lpa": 15.13
+      },
+      {
+        "step": 5,
+        "skill": "Amazon S3",
+        "cumulative_predicted_salary_lpa": 15.13
+      },
+      {
+        "step": 6,
+        "skill": "Apache Hadoop",
+        "cumulative_predicted_salary_lpa": 15.25
+      },
+      {
+        "step": 7,
+        "skill": "Amazon Redshift",
+        "cumulative_predicted_salary_lpa": 15.25
+      },
+      {
+        "step": 8,
+        "skill": "Alteryx",
+        "cumulative_predicted_salary_lpa": 16.17
+      }
+    ]
+  },
+  "complete": {
+    "session_id": "e5e65e7a-40af-4dfd-9ab8-692251178516",
+    "completed_skill": "Power BI",
+    "evidence_type": "project_log",
+    "confidence_assigned": 7,
+    "milestones_saved": 1,
+    "previous_path_length": 8,
+    "new_path_length": 7,
+    "new_path": [
+      {
+        "step_number": 1,
+        "skill": "Microsoft Excel",
+        "cost": 0.2289,
+        "reachable_via": "Machine Learning",
+        "is_essential": true
+      },
+      {
+        "step_number": 2,
+        "skill": "AWS",
+        "cost": 0.316,
+        "reachable_via": "Python",
+        "is_essential": true
+      },
+      {
+        "step_number": 3,
+        "skill": "Amazon EC2",
+        "cost": 0.3092,
+        "reachable_via": "AWS",
+        "is_essential": true
+      },
+      {
+        "step_number": 4,
+        "skill": "Amazon S3",
+        "cost": 0.3129,
+        "reachable_via": "AWS",
+        "is_essential": true
+      },
+      {
+        "step_number": 5,
+        "skill": "Apache Hadoop",
+        "cost": 0.4071,
+        "reachable_via": "SQL",
+        "is_essential": true
+      },
+      {
+        "step_number": 6,
+        "skill": "Amazon Redshift",
+        "cost": 0.4698,
+        "reachable_via": "AWS",
+        "is_essential": true
+      },
+      {
+        "step_number": 7,
+        "skill": "Alteryx",
+        "cost": 0.6017,
+        "reachable_via": "Power BI",
+        "is_essential": true
+      }
+    ],
+    "updated_profile": {
+      "raw_sections": {},
+      "extracted_skills": [
+        {
+          "skill": "Python",
+          "category": "Programming Languages",
+          "confidence": 5,
+          "mention_count": 1,
+          "found_in_sections": [
+            "MANUAL"
+          ]
+        },
+        {
+          "skill": "SQL",
+          "category": "Programming Languages",
+          "confidence": 5,
+          "mention_count": 1,
+          "found_in_sections": [
+            "MANUAL"
+          ]
+        },
+        {
+          "skill": "Machine Learning",
+          "category": "Data Science/ML/AI",
+          "confidence": 5,
+          "mention_count": 1,
+          "found_in_sections": [
+            "MANUAL"
+          ]
+        },
+        {
+          "skill": "Statistical Analysis",
+          "category": "Data Science/ML/AI",
+          "confidence": 5,
+          "mention_count": 1,
+          "found_in_sections": [
+            "MANUAL"
+          ]
+        },
+        {
+          "skill": "OpenSCAD",
+          "category": "Programming Languages",
+          "confidence": 9,
+          "mention_count": 1,
+          "found_in_sections": [
+            "GITHUB_VERIFIED"
+          ]
+        },
+        {
+          "skill": "C",
+          "category": "Programming Languages",
+          "confidence": 9,
+          "mention_count": 10,
+          "found_in_sections": [
+            "GITHUB_VERIFIED"
+          ]
+        },
+        {
+          "skill": "C++",
+          "category": "Programming Languages",
+          "confidence": 9,
+          "mention_count": 1,
+          "found_in_sections": [
+            "GITHUB_VERIFIED"
+          ]
+        },
+        {
+          "skill": "Power BI",
+          "category": "Acquired",
+          "confidence": 7,
+          "mention_count": 1,
+          "found_in_sections": [
+            "PROJECT_LOG"
+          ]
+        }
+      ],
+      "experience_years_est": null,
+      "parse_warnings": []
+    }
+  },
+  "qa": {
+    "question_id": "how_long_will_this_take",
+    "answer_text": "Completing your 7-milestone learning path requires an estimated 280 total study hours (~40 hours per skill). At 15 hours/week, you will finish in approximately 19 weeks (~133 days).",
+    "structured_payload": {
+      "path_length": 7,
+      "hours_per_week": 15,
+      "estimated_total_hours": 280,
+      "estimated_weeks": 19,
+      "estimated_days": 133,
+      "target_timeframe_days": null
+    }
+  }
+}

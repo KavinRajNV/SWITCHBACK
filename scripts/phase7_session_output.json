@@ -1,0 +1,321 @@
+{
+  "session_id": "f68cc9e6-dfea-40f2-b4ab-488a97e5185b",
+  "related_roles": {
+    "soc_code": "15-2051.00",
+    "count": 5,
+    "related_occupations": [
+      {
+        "onet_soc_code": "15-2041.00",
+        "title": "Statisticians",
+        "index": 1,
+        "relatedness_tier": "Primary-Short",
+        "market_median_salary_lpa": null
+      },
+      {
+        "onet_soc_code": "43-9111.00",
+        "title": "Statistical Assistants",
+        "index": 2,
+        "relatedness_tier": "Primary-Short",
+        "market_median_salary_lpa": null
+      },
+      {
+        "onet_soc_code": "13-2099.01",
+        "title": "Financial Quantitative Analysts",
+        "index": 3,
+        "relatedness_tier": "Primary-Short",
+        "market_median_salary_lpa": null
+      },
+      {
+        "onet_soc_code": "15-2031.00",
+        "title": "Operations Research Analysts",
+        "index": 4,
+        "relatedness_tier": "Primary-Short",
+        "market_median_salary_lpa": null
+      },
+      {
+        "onet_soc_code": "19-1029.01",
+        "title": "Bioinformatics Scientists",
+        "index": 5,
+        "relatedness_tier": "Primary-Short",
+        "market_median_salary_lpa": null
+      }
+    ]
+  },
+  "what_if": {
+    "question_id": "what_if_i_already_know_x",
+    "answer_text": "Adding 'AWS' to your acquired skills reduces your learning path length by 1 milestone(s) (from 10 down to 9 steps)!",
+    "structured_payload": {
+      "added_skill": "AWS",
+      "original_path_length": 10,
+      "new_path_length": 9,
+      "milestones_saved": 1,
+      "new_path": [
+        {
+          "skill": "Statistical Analysis",
+          "step_number": 1,
+          "cost": 0.2,
+          "reachable_via": "Machine Learning",
+          "is_essential": true
+        },
+        {
+          "skill": "C",
+          "step_number": 2,
+          "cost": 0.2,
+          "reachable_via": "Machine Learning",
+          "is_essential": true
+        },
+        {
+          "skill": "Power BI",
+          "step_number": 3,
+          "cost": 0.2069,
+          "reachable_via": "Python",
+          "is_essential": true
+        },
+        {
+          "skill": "Microsoft Excel",
+          "step_number": 4,
+          "cost": 0.2289,
+          "reachable_via": "Machine Learning",
+          "is_essential": true
+        },
+        {
+          "skill": "Amazon EC2",
+          "step_number": 5,
+          "cost": 0.3092,
+          "reachable_via": "AWS",
+          "is_essential": true
+        },
+        {
+          "skill": "Amazon S3",
+          "step_number": 6,
+          "cost": 0.3129,
+          "reachable_via": "AWS",
+          "is_essential": true
+        },
+        {
+          "skill": "Apache Hadoop",
+          "step_number": 7,
+          "cost": 0.4071,
+          "reachable_via": "SQL",
+          "is_essential": true
+        },
+        {
+          "skill": "Amazon Redshift",
+          "step_number": 8,
+          "cost": 0.4698,
+          "reachable_via": "AWS",
+          "is_essential": true
+        },
+        {
+          "skill": "Alteryx",
+          "step_number": 9,
+          "cost": 0.6017,
+          "reachable_via": "SQL",
+          "is_essential": true
+        }
+      ]
+    }
+  },
+  "dash": {
+    "session_id": "f68cc9e6-dfea-40f2-b4ab-488a97e5185b",
+    "profile_summary": {
+      "total_acquired_skills": 3,
+      "experience_years_est": null,
+      "current_predicted_salary_lpa": 11.69
+    },
+    "target_role": {
+      "onet_soc_code": "15-2051.00",
+      "title": "Data Scientists",
+      "market_median_salary_lpa": 14.5
+    },
+    "progress": {
+      "completed_milestones_count": 0,
+      "remaining_milestones_count": 10,
+      "progress_percentage": 0.0
+    },
+    "next_action_milestone": {
+      "step_number": 1,
+      "skill": "Statistical Analysis",
+      "cost": 0.2,
+      "reachable_via": "Machine Learning",
+      "is_essential": true,
+      "explanation": "Acquiring Statistical Analysis ranks #231 out of 265 skills by market salary impact (specialized technical capability, average impact: \u20b90.25L).",
+      "free_courses": [],
+      "paid_courses": [
+        {
+          "title": "Java 17 Masterclass: Start Coding in 2024",
+          "source": "udemy_large",
+          "url": "https://www.udemy.com/course/java-the-complete-java-developer-course/",
+          "price": null,
+          "rating": 4.5675483
+        },
+        {
+          "title": "R Programming A-Z\u2122: R For Data Science With Real Exercises!",
+          "source": "udemy_large",
+          "url": "https://www.udemy.com/course/r-programming/",
+          "price": null,
+          "rating": 4.6417975
+        },
+        {
+          "title": "Statistics for Data Science and Business Analysis",
+          "source": "udemy_large",
+          "url": "https://www.udemy.com/course/statistics-for-data-science-and-business-analysis/",
+          "price": null,
+          "rating": 4.55015
+        }
+      ]
+    },
+    "elevation_profile": [
+      {
+        "step": 0,
+        "skill": "Current Profile",
+        "cumulative_predicted_salary_lpa": 11.69
+      },
+      {
+        "step": 1,
+        "skill": "Statistical Analysis",
+        "cumulative_predicted_salary_lpa": 11.69
+      },
+      {
+        "step": 2,
+        "skill": "C",
+        "cumulative_predicted_salary_lpa": 11.45
+      },
+      {
+        "step": 3,
+        "skill": "Power BI",
+        "cumulative_predicted_salary_lpa": 13.89
+      },
+      {
+        "step": 4,
+        "skill": "Microsoft Excel",
+        "cumulative_predicted_salary_lpa": 14.81
+      },
+      {
+        "step": 5,
+        "skill": "AWS",
+        "cumulative_predicted_salary_lpa": 15.13
+      },
+      {
+        "step": 6,
+        "skill": "Amazon EC2",
+        "cumulative_predicted_salary_lpa": 15.13
+      },
+      {
+        "step": 7,
+        "skill": "Amazon S3",
+        "cumulative_predicted_salary_lpa": 15.13
+      },
+      {
+        "step": 8,
+        "skill": "Apache Hadoop",
+        "cumulative_predicted_salary_lpa": 15.25
+      },
+      {
+        "step": 9,
+        "skill": "Amazon Redshift",
+        "cumulative_predicted_salary_lpa": 15.25
+      },
+      {
+        "step": 10,
+        "skill": "Alteryx",
+        "cumulative_predicted_salary_lpa": 16.17
+      }
+    ],
+    "recent_activities": []
+  },
+  "final_path": {
+    "session_id": "f68cc9e6-dfea-40f2-b4ab-488a97e5185b",
+    "target_occupation_soc_code": "15-2051.00",
+    "target_occupation_title": "Data Scientists",
+    "is_fully_qualified": true,
+    "path_length": 0,
+    "milestones": [],
+    "owned_skill_contributions": [
+      {
+        "skill": "AWS",
+        "contribution_lpa": 0.2368,
+        "explanation": "Your AWS experience is contributing an estimated +\u20b90.24L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Alteryx",
+        "contribution_lpa": 0.9948,
+        "explanation": "Your Alteryx experience is contributing an estimated +\u20b90.99L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Amazon EC2",
+        "contribution_lpa": 0.0,
+        "explanation": "Your Amazon EC2 experience provides core foundational competency with a neutral direct salary adjustment (+\u20b90.00L)."
+      },
+      {
+        "skill": "Amazon Redshift",
+        "contribution_lpa": 0.0,
+        "explanation": "Your Amazon Redshift experience provides core foundational competency with a neutral direct salary adjustment (+\u20b90.00L)."
+      },
+      {
+        "skill": "Amazon S3",
+        "contribution_lpa": 0.0,
+        "explanation": "Your Amazon S3 experience provides core foundational competency with a neutral direct salary adjustment (+\u20b90.00L)."
+      },
+      {
+        "skill": "Apache Hadoop",
+        "contribution_lpa": 0.7587,
+        "explanation": "Your Apache Hadoop experience is contributing an estimated +\u20b90.76L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "C",
+        "contribution_lpa": -0.1122,
+        "explanation": "Your C profile signals are associated with a slight market adjustment of -\u20b90.11L relative to general role averages."
+      },
+      {
+        "skill": "Machine Learning",
+        "contribution_lpa": 0.1622,
+        "explanation": "Your Machine Learning experience is contributing an estimated +\u20b90.16L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Microsoft Excel",
+        "contribution_lpa": 0.3052,
+        "explanation": "Your Microsoft Excel experience is contributing an estimated +\u20b90.31L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Power BI",
+        "contribution_lpa": 2.1439,
+        "explanation": "Your Power BI experience is contributing an estimated +\u20b92.14L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Python",
+        "contribution_lpa": -0.2644,
+        "explanation": "Your Python profile signals are associated with a slight market adjustment of -\u20b90.26L relative to general role averages."
+      },
+      {
+        "skill": "SQL",
+        "contribution_lpa": 0.6177,
+        "explanation": "Your SQL experience is contributing an estimated +\u20b90.62L to your predicted market salary benchmark."
+      },
+      {
+        "skill": "Statistical Analysis",
+        "contribution_lpa": -0.0578,
+        "explanation": "Your Statistical Analysis profile signals are associated with a slight market adjustment of -\u20b90.06L relative to general role averages."
+      }
+    ],
+    "elevation_profile": [
+      {
+        "step": 0,
+        "skill": "Baseline (Current Skills)",
+        "cumulative_predicted_salary_lpa": 16.17
+      }
+    ]
+  },
+  "completed_skills": [
+    "Statistical Analysis",
+    "C",
+    "Power BI",
+    "Microsoft Excel",
+    "AWS",
+    "Amazon EC2",
+    "Amazon S3",
+    "Apache Hadoop",
+    "Amazon Redshift",
+    "Alteryx"
+  ]
+}

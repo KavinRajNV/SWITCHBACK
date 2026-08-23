@@ -1,0 +1,113 @@
+domain,channel_name,language,approx_subscriber_tier,why_trustworthy,primary_topics,confidence
+Data Science/ML,freeCodeCamp.org,English,10M+,"Nonprofit-backed, full-length verified certification courses, extremely well established",Python;ML;data analysis;certifications,HIGH
+Data Science/ML,Krish Naik,English,1M+,"Well-known industry practitioner (ex-INEURON founder), huge structured ML/DL playlist library",machine learning;deep learning;NLP;interview prep,HIGH
+Data Science/ML,codebasics,English,1M+,"Run by Dhaval Patel, ex-Bloomberg/NVIDIA data professional, project-based India-focused teaching",Python;SQL;data analytics;ML projects,HIGH
+Data Science/ML,StatQuest with Josh Starmer,English,1M+,"Josh Starmer (former Harvard/UNC bioinformatics researcher), gold-standard for stats/ML intuition",statistics;machine learning;bioinformatics,HIGH
+Data Science/ML,3Blue1Brown,English,5M+,"Grant Sanderson's channel, renowned for rigorous visual math (linear algebra, neural nets) explainers",linear algebra;neural networks;calculus,HIGH
+Data Science/ML,Sentdex,English,1M+,"Harrison Kinsley's long-running practical Python/ML channel, widely cited by learners",Python;machine learning;NLP;finance data,HIGH
+Data Science/ML,Kaggle,English,100K-500K,"Official channel of the Kaggle platform (owned by Google), competition walkthroughs and tutorials",data science competitions;ML case studies,HIGH
+Data Science/ML,Data School,English,100K-500K,"Kevin Markham's long-standing focused pandas/scikit-learn tutorial channel",pandas;scikit-learn;Python for data,HIGH
+Data Science/ML,Corey Schafer,English,1M+,"Widely recommended for clear, well-produced Python and data tooling tutorials",Python;pandas;matplotlib;git,HIGH
+Data Science/ML,DeepLearning.AI,English,500K-1M,"Andrew Ng's official organization channel, ties to Coursera/Stanford-affiliated courses",deep learning;AI;MLOps,HIGH
+Data Science/ML,Simplilearn,English,3M+,"Large established India-based ed-tech company, broad structured course catalog",data science;ML;AI;certifications,HIGH
+Data Science/ML,edureka!,English,3M+,"Established India-based ed-tech company with long-running structured tech course playlists",data science;Python;big data;AI,HIGH
+Data Science/ML,CampusX,English,500K-1M,"Nitish Singh's channel, popular among Indian learners for structured, free full DS/ML courses",data science;machine learning;deep learning,MEDIUM
+Data Science/ML,Ken Jee,English,100K-500K,"Practicing data scientist, well known for data science career and portfolio-building content",data science career;portfolio projects,HIGH
+Data Science/ML,Two Minute Papers,English,1M+,"Károly Zsolnai-Fehér (former researcher), summarizes AI/ML research papers accessibly",AI research;deep learning papers,HIGH
+Data Science/ML,Great Learning,English,1M+,"Established India-based ed-tech company, structured data science/analytics playlists",data analytics;data science;AI,MEDIUM
+Data Science/ML,NeetCode,English,500K-1M,"Ex-Google/Meta engineer, though DSA-focused, also covers ML systems/interview prep material",DSA;interview prep;systems,MEDIUM
+Data Science/ML — Tamil,Data Science in Tamil,Tamil,10K-100K,"Dedicated Tamil-language channel/site (datascienceintamil.com) with structured NumPy/Pandas/stats/ML playlists",Python;pandas;statistics;ML basics,MEDIUM
+Data Science/ML — Tamil,Error Makes Clever,Tamil,1M+,"Largest Tamil-language programming community channel; flagship Python course has millions of views",Python;programming fundamentals;career guidance,MEDIUM
+Web Development,freeCodeCamp.org,English,10M+,"Nonprofit, full free certifications, huge verified library of full-stack courses",HTML/CSS;JavaScript;React;Node.js,HIGH
+Web Development,Traversy Media,English,2M+,"Brad Traversy, one of the most established full-stack web dev educators on YouTube",full stack;JavaScript;React;Node.js,HIGH
+Web Development,The Net Ninja,English,1M+,"Shaun Pelling, known for well-organized sequential playlists on modern JS frameworks",React;Vue;Node.js;Firebase,HIGH
+Web Development,Web Dev Simplified,English,1M+,"Kyle Cook, widely recommended for clear JavaScript/React concept explainers",JavaScript;React;web fundamentals,HIGH
+Web Development,Kevin Powell,English,1M+,"Widely regarded as the top CSS-focused educator on YouTube",CSS;responsive design;layout,HIGH
+Web Development,Academind,English,1M+,"Maximilian Schwarzmüller and team, in-depth explanations beyond surface syntax",JavaScript;React;Node.js;TypeScript,HIGH
+Web Development,Programming with Mosh,English,3M+,"Mosh Hamedani, long-established, polished structured programming/web courses",JavaScript;React;full stack basics,HIGH
+Web Development,Fireship,English,3M+,"Jeff Delaney, fast-paced high-production overviews of frameworks/tools, very widely watched",web frameworks;JavaScript;dev tools,HIGH
+Web Development,Dave Gray,English,200K-500K,"Former educator, known for long complete Node/Express/full-stack courses",Node.js;Express;full stack,MEDIUM
+Web Development,Codevolution,English,700K-1M,"Focused, structured React/TypeScript tutorial series widely used by learners",React;TypeScript,HIGH
+Web Development,CodeWithHarry,English/Hindi,5M+,"One of the largest India-based programming educators, extensive free full courses",web development;Python;DSA,HIGH
+Web Development,Apna College,English/Hindi,5M+,"Founded by ex-Amazon/Microsoft engineers, hugely popular India-focused placement-oriented courses",DSA;web development;placement prep,HIGH
+Web Development,Thapa Technical,Hindi,2M+,"Popular Hindi-medium full-stack web development educator",MERN stack;JavaScript;web dev,MEDIUM
+Web Development,ByteGrad,English,100K-300K,"Modern, concise React/Next.js/TypeScript-focused tutorials",React;Next.js;TypeScript,MEDIUM
+Web Development,Theo - t3.gg,English,300K-500K,"Well-known figure in the TypeScript/React/Next.js ecosystem, opinionated current takes",TypeScript;Next.js;full stack architecture,MEDIUM
+Web Development — Tamil,Tamil Coding Wizard,Tamil,10K-50K,"Channel dedicated to modern web tooling explained in Tamil (React, Next.js, Firebase, Supabase, deployments)",React;Next.js;full stack;deployment,MEDIUM
+Web Development — Tamil,Tamil Programmer,Tamil,50K-200K,"Tamil-medium channel aimed at removing the English-language barrier to learning software development",programming fundamentals;coding basics,MEDIUM
+Web Development — Tamil,code io - Tamil,Tamil,10K-100K,"Tamil-language channel positioned around simplifying coding concepts",coding basics;web development,LOW
+Cloud Computing,Amazon Web Services,English,500K-1M,"Official AWS channel run by Amazon",AWS services;cloud architecture,HIGH
+Cloud Computing,Google Cloud Tech,English,500K-1M,"Official Google Cloud channel",GCP;cloud infrastructure;BigQuery,HIGH
+Cloud Computing,Microsoft Azure,English,300K-500K,"Official Microsoft Azure channel",Azure;cloud services;certifications,HIGH
+Cloud Computing,TechWorld with Nana,English,1M+,"Nana Janashia, extremely well regarded for practical DevOps/cloud/Kubernetes explainers",DevOps;Kubernetes;Docker;cloud,HIGH
+Cloud Computing,freeCodeCamp.org,English,10M+,"Nonprofit, hosts full-length verified AWS/Azure/GCP certification prep courses",AWS;Azure;GCP;certification prep,HIGH
+Cloud Computing,Simplilearn,English,3M+,"Large established India-based ed-tech company with structured cloud certification playlists",AWS;Azure;cloud computing,HIGH
+Cloud Computing,edureka!,English,3M+,"Established India-based ed-tech company, long-running structured cloud/DevOps courses",AWS;DevOps;cloud computing,HIGH
+Cloud Computing,KodeKloud,English,300K-500K,"Focused hands-on DevOps/cloud/Kubernetes training-oriented channel",Kubernetes;DevOps;cloud labs,MEDIUM
+Cloud Computing,Great Learning,English,1M+,"Established India-based ed-tech company with structured cloud/AWS playlists",AWS;cloud computing;DevOps,MEDIUM
+Cloud Computing,Tutorials Point,English,3M+,"Long-established programming/IT tutorial publisher with broad cloud content",cloud basics;AWS;Azure,MEDIUM
+Cloud Computing — Tamil,The Madras Programmer,Tamil,10K-50K,"Tamil-medium channel with an AWS/cloud computing full-course series covering EC2, S3, and architecture basics",AWS;cloud computing;EC2;S3,MEDIUM
+Cloud Computing — Tamil,Maanavan Learn Code,Tamil,10K-100K,"Tamil-medium channel offering an AWS Certified Cloud Practitioner / DevOps course series",AWS certification;cloud practitioner;DevOps,LOW
+Programming Fundamentals,freeCodeCamp.org,English,10M+,"Nonprofit, full verified certification-length courses in Python/Java/C++/DSA",Python;Java;C++;DSA,HIGH
+Programming Fundamentals,CodeWithHarry,English/Hindi,5M+,"One of the largest India-based programming educators with extensive DSA/language courses",Python;Java;C++;DSA,HIGH
+Programming Fundamentals,Apna College,English/Hindi,5M+,"Founded by ex-Amazon/Microsoft engineers, hugely popular placement-oriented DSA content",DSA;Java;C++;interview prep,HIGH
+Programming Fundamentals,take U forward (Striver),English,700K-1M,"Raj Vikramaditya (ex-Google SWE), the most widely cited DSA interview-prep channel in India",DSA;interview prep;competitive programming,HIGH
+Programming Fundamentals,Abdul Bari,English,1M+,"Retired academic, extremely well regarded for rigorous algorithm/DSA theory explanations",algorithms;data structures;complexity analysis,HIGH
+Programming Fundamentals,mycodeschool,English,1M+,"Long-standing, classic, still widely recommended DSA fundamentals channel",data structures;algorithms;C/C++,HIGH
+Programming Fundamentals,GeeksforGeeks,English,2M+,"Established computer science education platform/publisher",DSA;programming languages;interview prep,HIGH
+Programming Fundamentals,Programming with Mosh,English,3M+,"Mosh Hamedani, long-established polished structured programming courses",Python;Java;C#;programming basics,HIGH
+Programming Fundamentals,Corey Schafer,English,1M+,"Widely recommended for clear, well-produced Python tutorials",Python;OOP;tooling,HIGH
+Programming Fundamentals,Telusko,English,2M+,"Navin Reddy, extremely popular for Java and core programming fundamentals",Java;Python;Spring;programming basics,HIGH
+Programming Fundamentals,Kunal Kushwaha,English,500K-1M,"Ex-industry engineer known for a widely-followed free DSA/CS fundamentals cohort series",DSA;open source;CS fundamentals,HIGH
+Programming Fundamentals,NeetCode,English,500K-1M,"Ex-Google/Meta engineer, one of the most trusted channels for LeetCode-style DSA prep",DSA;interview prep;algorithms,HIGH
+Programming Fundamentals,thenewboston,English,2M+,"Long-running, classic beginner-friendly programming fundamentals channel across many languages",programming basics;Python;Java;C++,MEDIUM
+Programming Fundamentals,CS Dojo,English,1M+,"Well-known for clear beginner-friendly Python and DSA explanations",Python;DSA;coding interviews,HIGH
+Programming Fundamentals,William Fiset,English,100K-300K,"Focused, well-cited channel specifically on algorithms and data structures theory",algorithms;graph theory;DSA,MEDIUM
+Programming Fundamentals — Tamil,Error Makes Clever,Tamil,1M+,"Largest Tamil-language programming channel; flagship Python course has millions of views",Python;programming fundamentals,MEDIUM
+Programming Fundamentals — Tamil,Tamil Programmer,Tamil,50K-200K,"Tamil-medium channel aimed at removing the English-language barrier to learning to code",coding basics;programming fundamentals,MEDIUM
+Programming Fundamentals — Tamil,Brototype Tamil,Tamil,50K-200K,"Regional-language arm of Brototype, a known South-India coding bootcamp community, free tutorials",coding fundamentals;career guidance,MEDIUM
+UI/UX & Product Design,The Futur,English,1M+,"Chris Do's well-established design business/education channel",design theory;branding;UX process,HIGH
+UI/UX & Product Design,DesignCourse,English,1M+,"Gary Simon, long-running well-regarded UI/UX and front-end design tutorials",UI design;Figma;design-to-code,HIGH
+UI/UX & Product Design,AJ&Smart,English,300K-500K,"Established design sprint/product design consultancy's channel",design sprints;product design;UX process,HIGH
+UI/UX & Product Design,CharliMarieTV,English,200K-300K,"Charli Marie, well-known UX/product design career and process content creator",UX design;design career,MEDIUM
+UI/UX & Product Design,Flux Academy,English,300K-500K,"Established web/UI design education channel with structured content",web design;UI design;freelancing,MEDIUM
+UI/UX & Product Design,Jesse Showalter,English,300K-500K,"Widely followed for accessible Figma and UI design tutorials",Figma;UI design,MEDIUM
+UI/UX & Product Design,Figma,English,300K-500K,"Official Figma product channel",Figma;prototyping;design systems,HIGH
+UI/UX & Product Design,Dansky,English,100K-300K,"Well-known UX design career and portfolio-focused creator",UX design;portfolio;career advice,MEDIUM
+UI/UX & Product Design,CareerFoundry,English,50K-200K,"Established online UX/UI design school's official channel",UX design;career transition,MEDIUM
+UI/UX & Product Design — Tamil,[No solid dedicated Tamil UI/UX channel identified],Tamil,N/A,"Search surfaced only individual Figma/UI tutorial videos and playlists (e.g. from IT-training-institute channels), not an established dedicated Tamil UI/UX creator — flagging this as a genuine content gap rather than padding the list",N/A,GAP-FLAGGED
+Digital Marketing,Neil Patel,English,1M+,"Well-known digital marketing entrepreneur/educator",SEO;content marketing;growth,HIGH
+Digital Marketing,HubSpot,English,1M+,"Official channel of HubSpot, established marketing/CRM software company",inbound marketing;content strategy;sales,HIGH
+Digital Marketing,Ahrefs,English,500K-1M,"Official channel of the Ahrefs SEO tool company",SEO;keyword research;backlinks,HIGH
+Digital Marketing,Moz,English,100K-300K,"Official channel of Moz, established SEO software/education company",SEO fundamentals;local SEO,HIGH
+Digital Marketing,Backlinko (Brian Dean),English,300K-500K,"Brian Dean, widely cited SEO educator and case-study publisher",SEO;link building;content strategy,HIGH
+Digital Marketing,WordStream,English,50K-100K,"Established PPC/paid-search software company's official channel",PPC;Google Ads;paid search,MEDIUM
+Digital Marketing,Think with Google,English,100K-300K,"Official Google marketing insights channel",marketing trends;consumer insights,HIGH
+Digital Marketing,Semrush,English,100K-300K,"Official channel of the Semrush SEO/marketing tool company",SEO;competitive analysis;content marketing,HIGH
+Digital Marketing,Simplilearn,English,3M+,"Large established India-based ed-tech company, structured digital marketing playlists",digital marketing;SEO;social media marketing,HIGH
+Digital Marketing,edureka!,English,3M+,"Established India-based ed-tech company with structured digital marketing course content",digital marketing;SEO;SEM,HIGH
+Digital Marketing — Tamil,Mr Digital Marketing Tamil,Tamil,50K-200K,"Tamil-medium channel focused specifically on digital marketing fundamentals: SEO, SMM, social media",SEO;social media marketing;digital marketing basics,MEDIUM
+Digital Marketing — Tamil,TamilSEO,Tamil,10K-50K,"Dedicated Tamil-language SEO/digital marketing channel and companion website",SEO;digital marketing basics,LOW
+Cybersecurity,NetworkChuck,English,3M+,"Popular, well-produced networking/cybersecurity practical content creator",networking;cybersecurity;ethical hacking basics,HIGH
+Cybersecurity,The Cyber Mentor,English,1M+,"Heath Adams, well-known penetration testing educator and practitioner",penetration testing;ethical hacking;bug bounty,HIGH
+Cybersecurity,John Hammond,English,1M+,"Widely respected security researcher, CTF/malware-analysis-focused content",CTFs;malware analysis;security research,HIGH
+Cybersecurity,HackerSploit,English,700K-1M,"Long-running dedicated ethical hacking/pentesting tutorial channel",ethical hacking;penetration testing;Linux security,HIGH
+Cybersecurity,Professor Messer,English,700K-1M,"Long-established, widely trusted CompTIA certification (Security+, Network+) educator",CompTIA Security+;networking;certification prep,HIGH
+Cybersecurity,Computerphile,English,2M+,"Numberphile-affiliated channel, strong on CS/security theory explainers",security concepts;cryptography;CS theory,HIGH
+Cybersecurity,LiveOverflow,English,700K-1M,"Well-regarded binary exploitation / CTF-focused security education channel",binary exploitation;CTFs;reverse engineering,HIGH
+Cybersecurity,David Bombal,English,2M+,"Established networking/cybersecurity educator with strong industry interview content",networking;cybersecurity career;CCNA,HIGH
+Cybersecurity,Null Byte,English,1M+,"Long-running ethical hacking tutorial channel affiliated with the WonderHowTo network",ethical hacking;Wi-Fi security;OSINT,MEDIUM
+Cybersecurity,IppSec,English,300K-500K,"Extremely well-regarded HackTheBox walkthrough / pentesting-practice channel",HackTheBox;penetration testing practice,HIGH
+Cybersecurity — Tamil,Cyber Voyage,Tamil,10K-50K,"Tamil-medium channel dedicated specifically to cybersecurity, ethical hacking, and digital-safety education",ethical hacking;cybersecurity basics;careers,MEDIUM
+Cybersecurity — Tamil,Hacking Tamil,Tamil,10K-50K,"Tamil-medium channel positioned around structured ethical hacking courses",ethical hacking;security basics,LOW
+Mobile App Development,Flutter,English,1M+,"Official Flutter/Google channel",Flutter;Dart;cross-platform apps,HIGH
+Mobile App Development,Android Developers,English,700K-1M,"Official Google Android developer channel",Android;Kotlin;Jetpack Compose,HIGH
+Mobile App Development,The Net Ninja,English,1M+,"Shaun Pelling, well-organized sequential mobile/web dev playlists",Flutter;React Native;Firebase,HIGH
+Mobile App Development,freeCodeCamp.org,English,10M+,"Nonprofit, full free certification-length mobile development courses",Flutter;React Native;Android,HIGH
+Mobile App Development,Programming with Mosh,English,3M+,"Mosh Hamedani, polished structured React Native/mobile courses",React Native;mobile fundamentals,HIGH
+Mobile App Development,CodeWithHarry,English/Hindi,5M+,"Large India-based programming educator, includes Android/Flutter course content",Android;Flutter;Kotlin,HIGH
+Mobile App Development,Reso Coder,English,200K-300K,"Well-regarded Flutter-focused architecture/state-management channel",Flutter;clean architecture;BLoC,MEDIUM
+Mobile App Development,Robert Brunhage,English,100K-200K,"Known Flutter educator and Google Developer Expert content creator",Flutter;Dart;app architecture,MEDIUM
+Mobile App Development,CodeWithChris,English,1M+,"Long-established, widely recommended iOS/Swift education channel",iOS;Swift;SwiftUI,HIGH
+Mobile App Development,Sean Allen,English,200K-300K,"Well-known, practical iOS/Swift tutorial creator",iOS;Swift;app architecture,MEDIUM
+Mobile App Development — Tamil,[No solid dedicated Tamil mobile-dev channel identified],Tamil,N/A,"Search surfaced only scattered individual Android/Flutter tutorial videos, not an established dedicated Tamil mobile-development creator — flagging this as a genuine content gap rather than padding the list",N/A,GAP-FLAGGED

@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* Self-Hosted Fonts (@font-face) */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/SpaceGrotesk-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./assets/fonts/SpaceGrotesk-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./assets/fonts/Inter-SemiBold.woff2') format('woff2');
+}
+
+@theme {
+  --color-forest-light: #298A64;
+  --color-forest: #1F6B4D;
+  --color-forest-dark: #18543C;
+  --color-forest-deep: #0F3827;
+
+  --color-amber-light: #F4AA5B;
+  --color-amber: #E08A34;
+  --color-amber-dark: #C77524;
+
+  --color-paper-light: #FFFFFF;
+  --color-paper: #FAF7F0;
+  --color-paper-dark: #F4EFE3;
+
+  --color-contour: #E4DFD3;
+  --color-contour-dark: #D5CDBC;
+
+  --color-ink: #1C2421;
+  --color-ink-light: #2F3D37;
+
+  --color-muted: #4A5852;
+  --color-muted-light: #6C7E76;
+
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: Inter, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAF7F0;
+    color: #1C2421;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom focus ring for keyboard navigation accessibility */
+*:focus-visible {
+  outline: 2px solid #E08A34;
+  outline-offset: 2px;
+}
+
+/* prefers-reduced-motion fallback rules */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #E4DFD3;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1F6B4D;
+}

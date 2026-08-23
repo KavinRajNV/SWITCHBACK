@@ -1,0 +1,297 @@
+================================================================================
+RESUME 1 — TEST CASE: ATS-style / plain-text resume (clean, easy case)
+All names, companies, and contact details below are entirely fictional.
+================================================================================
+
+ARJUN MENON
+Bengaluru, Karnataka | arjun.menon.dev@fakemail.com | +91 90000 11122
+linkedin.com/in/arjunmenon-fake | github.com/arjunmenon-fake
+
+SUMMARY
+Backend software engineer with 4 years of experience building scalable REST
+APIs and microservices for e-commerce platforms. Strong in Python, Java, and
+cloud-native deployment on AWS.
+
+SKILLS
+Languages: Python, Java, SQL, JavaScript
+Frameworks: Django, Spring Boot, Flask, React
+Databases: PostgreSQL, MySQL, Redis, MongoDB
+Cloud & DevOps: AWS (EC2, S3, Lambda), Docker, Kubernetes, Jenkins, CI/CD, Git
+Other: REST APIs, Microservices, Agile/Scrum, Unit Testing
+
+EXPERIENCE
+
+Software Engineer II — Nimbus Retail Technologies Pvt Ltd, Bengaluru
+June 2022 – Present
+- Designed and shipped a microservices-based order management system handling
+  40,000+ daily transactions using Java, Spring Boot, and PostgreSQL.
+- Migrated a monolithic checkout service to a containerized architecture using
+  Docker and Kubernetes, reducing deployment time by 60%.
+- Built internal REST APIs consumed by mobile and web clients; maintained 99.9%
+  uptime SLA.
+- Mentored two junior engineers and led sprint planning as part of a 6-person
+  Agile team.
+
+Software Engineer — Bluewave Systems Pvt Ltd, Chennai
+July 2020 – May 2022
+- Developed data pipelines in Python to process daily sales analytics for
+  internal dashboards.
+- Implemented CI/CD pipelines using Jenkins, cutting release cycles from weekly
+  to daily.
+- Wrote unit and integration tests (pytest) achieving 85% code coverage on core
+  billing modules.
+
+EDUCATION
+B.Tech in Computer Science and Engineering
+Anna University, Chennai — 2016 – 2020
+CGPA: 8.4 / 10
+
+CERTIFICATIONS
+- AWS Certified Solutions Architect – Associate (2023)
+- Oracle Certified Associate, Java SE 8 Programmer (2021)
+
+
+================================================================================
+RESUME 2 — TEST CASE: Fresher/student resume (little/no work experience;
+skills embedded in academic projects and coursework, not a dedicated Skills
+section only)
+All names, companies, and contact details below are entirely fictional.
+================================================================================
+
+PRIYA RAGHAVAN
+Coimbatore, Tamil Nadu | priya.raghavan.student@fakemail.com | +91 98000 22334
+github.com/priyar-fake
+
+OBJECTIVE
+Final-year Computer Science student seeking an entry-level Data Analyst or
+Software Engineering role where I can apply my coursework in Python, SQL, and
+machine learning to real-world problems.
+
+EDUCATION
+B.E. in Computer Science and Engineering (Final Year)
+PSG College of Technology, Coimbatore — Expected Graduation: May 2026
+CGPA: 8.7 / 10
+Relevant coursework: Data Structures & Algorithms, Database Management
+Systems, Machine Learning, Operating Systems, Computer Networks
+
+ACADEMIC PROJECTS
+
+Student Attendance Prediction System (Final Year Project) — Aug 2025 – Present
+- Built a machine learning model in Python using scikit-learn and pandas to
+  predict student attendance drop-off risk from historical academic records.
+- Cleaned and preprocessed a dataset of 5,000+ student records; engineered
+  features that improved model accuracy from 71% to 86%.
+- Deployed the model as a simple Flask web app so faculty could query
+  predictions through a browser interface.
+
+Campus Marketplace Web App (Course Project, Web Technologies) — Jan 2025 – Apr 2025
+- Built a full-stack buy/sell platform for students using React on the
+  frontend and Node.js with Express on the backend, backed by MongoDB.
+- Implemented user authentication with JWT and a search/filter feature for
+  listings.
+- Worked in a 4-person team using Git for version control and Trello for task
+  tracking.
+
+Database Design for a Library Management System (Coursework, DBMS Lab) — 2024
+- Designed a normalized relational schema in MySQL for a library system with
+  books, members, and loan transactions.
+- Wrote complex SQL queries involving joins, subqueries, and stored procedures
+  as part of the lab evaluation.
+
+INTERNSHIP
+
+Data Analytics Intern — Southern Grain Logistics Pvt Ltd, Coimbatore
+May 2025 – July 2025
+- Assisted the operations team by building Excel dashboards and pivot tables
+  to track monthly shipment delays.
+- Learned basic Power BI to visualize regional delivery performance for a
+  weekly stakeholder review.
+- Shadowed the analytics lead to understand how SQL queries were used to pull
+  data from the company's internal database.
+
+EXTRACURRICULAR / ACHIEVEMENTS
+- Runner-up, Inter-college Hackathon 2025 (built an ML-based crop yield
+  predictor in 24 hours using Python and Jupyter Notebook).
+- Core member, Coding Club — conducted a beginner Python workshop for 60+
+  first-year students.
+
+
+================================================================================
+RESUME 3 — TEST CASE: Career-switcher resume (unrelated prior field —
+mechanical engineering — with self-taught/certified tech skills; tests
+confidence-scoring for weaker, self-taught signals)
+All names, companies, and contact details below are entirely fictional.
+================================================================================
+
+SURESH KUMARASAMY
+Madurai, Tamil Nadu | suresh.kumarasamy.career@fakemail.com | +91 97000 33445
+
+PROFILE
+Mechanical engineer with 7 years of experience in manufacturing and quality
+assurance, currently transitioning into data analytics through self-study and
+professional certifications. Comfortable with Excel-heavy analysis from my
+engineering background; over the past year I have built hands-on SQL and
+Python skills through online coursework and personal projects.
+
+WORK EXPERIENCE
+
+Senior Quality Engineer — Vedanta Auto Components Ltd, Madurai
+April 2018 – Present
+- Led root-cause analysis for production defects across two assembly lines,
+  reducing rejection rate by 18% over two years.
+- Maintained quality tracking spreadsheets in MS Excel (pivot tables,
+  VLOOKUP) used by the plant manager for weekly reporting.
+- Coordinated with suppliers on ISO 9001 compliance documentation.
+- Recently began automating parts of the weekly defect report using Python
+  (pandas) to replace manual Excel consolidation, cutting reporting time from
+  4 hours to 40 minutes.
+
+Quality Engineer (Trainee) — Coastal Precision Works, Tuticorin
+June 2016 – March 2018
+- Performed dimensional inspection using CMM machines and recorded results in
+  Excel-based SPC charts.
+- Supported the transition from paper-based to digital inspection logs.
+
+SELF-DIRECTED LEARNING / CERTIFICATIONS (2024 – 2025)
+- Google Data Analytics Professional Certificate (Coursera) — completed 2025
+- "SQL for Data Analysis" course (Udemy) — completed 2024; built practice
+  queries against a sample retail sales database
+- "Python for Everybody" specialization (Coursera, University of Michigan) —
+  completed 2024
+- Currently working through a self-paced Power BI course; have built two
+  practice dashboards using a public COVID-19 dataset
+
+PERSONAL PROJECTS (self-taught, not used in a professional setting yet)
+- Built a small Python script to scrape and clean public manufacturing defect
+  datasets and visualize trends using matplotlib.
+- Recreated my workplace's monthly quality report as an interactive Power BI
+  dashboard as a personal practice project (not deployed at work).
+
+EDUCATION
+B.E. in Mechanical Engineering
+Madurai Kamaraj University — 2012 – 2016
+
+SKILLS
+From engineering background: MS Excel (advanced), Statistical Process
+Control, Root Cause Analysis, ISO 9001
+Self-taught (tech transition, less than 2 years' hands-on experience): SQL,
+Python (pandas, matplotlib), Power BI, basic data visualization
+
+
+================================================================================
+RESUME 4 — TEST CASE: "Creative"/inconsistently formatted resume (skills
+scattered mid-sentence across summary, experience bullets, and a
+sidebar-style section; inconsistent section naming)
+All names, companies, and contact details below are entirely fictional.
+Note: this resume is deliberately structured messily as PLAIN TEXT — there is
+no real visual sidebar, but the layout below simulates one using spacing, the
+way a two-column resume might extract when converted to plain text.
+================================================================================
+
+MEERA CHANDRASHEKAR — Creative Technologist
+meera.chandra.creative@fakemail.com  |  Hyderabad  |  +91 96000 44556
+
+ABOUT ME
+Hi! I'm Meera — a front-end leaning creative technologist who loves turning
+half-baked ideas into working prototypes. I mostly live in React and Figma
+these days, though I cut my teeth on jQuery back in the day (don't judge). I
+also dabble in a bit of Python when I need to automate something boring.
+
+TOOLBOX                          |  THINGS I'VE SHIPPED
+--------------------------------|-------------------------------------------
+Design: Figma, occasionally      |  Freelance / Contract Work
+Adobe XD                        |  2021 – Present
+Front-end: React, some Vue      |
+Also comfortable with: HTML,    |  Rebuilt the marketing site for a boutique
+CSS, a little jQuery            |  candle brand called "Wick & Wax Co." using
+                                 |  Next.js and Tailwind CSS — traffic went up
+Misc: Git (daily driver),       |  30% after launch (their words, not mine).
+Notion for notes, Framer for    |
+motion prototypes               |  Designed and built an interactive
+                                 |  onboarding flow prototype in Figma for a
+                                 |  fintech startup pitch deck — used React
+                                 |  and Framer Motion for the final clickable
+                                 |  demo.
+
+EXPERIENCE (the "real job" kind)
+
+UI Engineer, Studio Nine Design Collective, Hyderabad — Jan 2019 to Dec 2020
+Honestly this job was where I first got comfortable with JavaScript beyond
+just copy-pasting jQuery snippets. Spent most of my time turning Photoshop
+mockups into working HTML/CSS, and towards the end started picking up React
+for a couple of internal tools. Also did a fair bit of Adobe Illustrator work
+for icon sets, if that counts as "engineering."
+
+Junior Designer, Studio Nine Design Collective, Hyderabad — Jun 2017 to Dec 2018
+Started here as a pure visual designer (Photoshop, Illustrator, some early
+Sketch) before slowly sliding into front-end work because nobody else on the
+team wanted to touch CSS.
+
+EDUCATION
+Bachelor of Design (B.Des), Visual Communication
+National Institute of Design, Ahmedabad — 2013 to 2017
+
+RANDOM STUFF I'M PROUD OF
+- Ran a small workshop teaching Figma basics to 20 non-designers at a local
+  startup meetup.
+- Self-taught myself enough Python (mostly through YouTube, honestly) to
+  automate resizing hundreds of export assets — saved me a full day of manual
+  work.
+
+
+================================================================================
+RESUME 5 — TEST CASE: Resume with typos / inconsistent skill naming
+(deliberately includes realistic variants to stress-test fuzzy matching)
+All names, companies, and contact details below are entirely fictional.
+================================================================================
+
+KARTHIK VELAYUDHAM
+Trichy, Tamil Nadu | karthik.velayudham99@fakemail.com | +91 95000 55667
+
+CAREER OBJECTIVE
+Motivated software developer with 3 years experiance looking for a challangin
+role in a product based comapny. Good in phyton, Java Script and databses.
+
+SKILLS
+- phyton (Django, flask)
+- Java Script, ReactJS, React.js, Node JS
+- ms excel, power-bi, powerBI
+- My SQL, mongo db, postgre sql
+- Github, git-hub
+- Aws (ec2, s3), Dockar
+- HTML5 , css3, Boot Strap
+- machien learning basics, Pandas, num py
+
+WORK EXPERIANCE
+
+Software Developer — Zenlite Softwares Pvt. Ltd, Trichy
+Jan 2022 – Present (2 Yrs 6 Months)
+- Developed web applications using React.js and Node JS for internal clients.
+- Worked on REST api integration and Java Script based front end features.
+- Used git-hub for version control and collaberated with a team of 5
+  developers.
+- Wrote SQL querys for My SQL databse to support reporting features.
+- Occassionally used power-bi for creating basic sales dashbords for
+  managment review.
+
+Junior Developer — Pixon Web Solutions, Madurai
+Jun 2020 – Dec 2021
+- Built responsive webpages using HTML5, css3 and Boot Strap framwork.
+- Assisted senior developers in debuging phyton scripts for data processing
+  taks.
+- Learned basics of machien learning using pandas and num py libraries
+  through online tutorals.
+- Gained exposure to mongo db and postgre sql for small internal projets.
+
+EDUCATION
+B.E Computer Science Enginering
+Trichy Engineering College — 2016 – 2020
+Percentage: 78%
+
+CERTIFICATIONS
+- Aws Certified Cloud Practioner (2023)
+- Introduction to machien learning — cousera (2022)
+
+ADDITIONAL SKILLS
+Comfortable with dockar and basic k8s (kubernets), familier with agile /
+scrumm methodolgy, good comunication skills.
