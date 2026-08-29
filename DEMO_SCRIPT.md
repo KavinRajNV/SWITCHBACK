@@ -1,16 +1,16 @@
 # Switchback — Judge Presentation Demo Script & Talking Points
 
-> **Product Differentiator**: Zero LLM API calls anywhere in the application. Every recommendation, profile extraction, and SHAP explanation is 100% deterministic and grounded in real data.
+> **Product Differentiator**: A deterministic, data-grounded engine — every recommendation, profile extraction, and SHAP explanation traces to a real dataset, a trained model, or a graph computation. The conversational layer adds a lightweight LLM only to route questions and phrase replies; it is never a source of facts.
 
 ---
 
 ## ⏱️ Recommended Walkthrough Sequence (5-Minute Presentation)
 
-### 1. Landing Page & Zero-LLM Hook (1 Minute)
+### 1. Landing Page & Grounded-Engine Hook (1 Minute)
 - **Visual**: Start at `/`. Point out the signature interactive mountain scroll-trail line with the 5-frame runner sprite.
 - **Talking Points**:
-  - *"Welcome to Switchback. While competing teams rely on prompting LLMs—which invent generic, unverified learning paths—Switchback operates on a deliberate bet: zero LLM API calls anywhere in the product."*
-  - *"Our core engine is built on 16 cleaned MongoDB collections with over 517,000 documents, a 21,000-edge directed skill graph, and a 323-feature GradientBoosting model trained on real salary disclosures."*
+  - *"Welcome to Switchback. Where a pure-LLM assistant would invent generic, unverified learning paths, every number Switchback shows you traces back to a real dataset, a trained model, or a graph computation. The conversational layer only routes your question and phrases the reply."*
+  - *"The core engine is built on cleaned MongoDB collections, a 21,000-edge directed skill graph, and a 323-feature GradientBoosting salary model trained on real disclosures."*
 
 ---
 
@@ -54,7 +54,7 @@
 
 | Potential Objection / Question | Grounded Technical Answer |
 |---|---|
-| *"Why no LLM for resume parsing or Q&A?"* | LLMs hallucinate non-existent skills and courses. We use layout-aware PDF font coordinate extraction, string-distance taxonomy matching, and 8 constrained deterministic Q&A functions. |
+| *"How does the assistant avoid hallucinating skills or courses?"* | The LLM only classifies the question's intent (and only when the keyword classifier is unsure). The answer itself is produced by one of 8 deterministic functions reading the model, graph, and database — so every skill, course, and salary figure is real. Resume parsing is fully deterministic: layout-aware PDF font-coordinate extraction + string-distance taxonomy matching. |
 | *"How is salary trajectory calculated?"* | A `GradientBoostingRegressor` trained on job posting salary disclosures using 323 one-hot encoded skill features + seniority + company tiers. |
 | *"How is path sequencing computed?"* | A directed graph (`NetworkX`) with 1,281 nodes and 21,137 edges built from ESCO and O*NET relations. Path generation finds the shortest path through missing required skills using Dijkstra's algorithm. |
 | *"What happens if Adzuna is offline?"* | Our backend catches `httpx.ConnectTimeout` and gracefully returns `status: "unavailable"` with `jobs: []`, rendering a clean fallback banner without crashing page layout. |

@@ -66,14 +66,14 @@ export const CelebrationScreen: React.FC = () => {
 
         <div className="p-6 rounded-2xl bg-paper border border-contour/80 shadow-md space-y-1">
           <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Total Milestones</div>
-          <div className="font-heading text-3xl font-bold text-ink">{completedSkills.length || 8} Mastered</div>
+          <div className="font-heading text-3xl font-bold text-ink">{completedSkills.length} Mastered</div>
           <div className="text-[11px] text-forest font-semibold">100% Path Completion</div>
         </div>
 
         <div className="p-6 rounded-2xl bg-paper border border-contour/80 shadow-md space-y-1">
-          <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Zero LLM Guarantee</div>
-          <div className="font-heading text-3xl font-bold text-amber-dark">100% Deterministic</div>
-          <div className="text-[11px] text-muted">Traced to Model & Graph</div>
+          <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Grounded Engine</div>
+          <div className="font-heading text-3xl font-bold text-amber-dark">Traced to Data</div>
+          <div className="text-[11px] text-muted">Every step from the model &amp; graph</div>
         </div>
       </div>
 

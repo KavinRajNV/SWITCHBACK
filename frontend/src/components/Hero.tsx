@@ -64,7 +64,7 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted }) => {
 
           {/* Subheading / Tagline (Part B: Weaved 84,000+ job postings inline stat; Part D2: Mention #1 of Zero-LLM) */}
           <p className="text-lg sm:text-xl font-normal text-ink/90 leading-relaxed mb-10">
-            A personalized learning-path recommender built on <strong className="font-semibold text-forest">84,000+ real job postings</strong>, trained salary models, and deterministic graph algorithms — zero LLM API calls.
+            A personalized learning-path recommender built on <strong className="font-semibold text-forest">84,000+ real job postings</strong>, trained salary models, and deterministic graph algorithms — every recommendation traces back to real data, not a language model's guess.
           </p>
 
           {/* CTA Group */}

@@ -36,10 +36,10 @@ export const Footer: React.FC = () => {
               A personalized learning-path recommender built on real trained models, graph algorithms, and verified market data for HCLTech AMPlified 2026.
             </p>
 
-            {/* Quiet Trust Signal (Mention #2 of Zero-LLM site-wide) */}
+            {/* Quiet trust signal */}
             <div className="inline-flex items-center gap-2 bg-paper/10 border border-paper/20 rounded-full px-3.5 py-1.5 text-xs font-medium text-amber-light">
               <span className="w-2 h-2 rounded-full bg-amber" />
-              Zero LLM API calls anywhere in the product
+              Recommendations grounded in real data, not LLM guesses
             </div>
           </div>
 

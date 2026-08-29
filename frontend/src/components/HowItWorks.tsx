@@ -19,7 +19,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onGetStarted }) => {
     {
       num: "02",
       title: "Set Your Target Role",
-      desc: "Choose from 1,016 O*NET occupations or enter a free-text goal prompt. Our NLP engine resolves roles without LLM hallucinations.",
+      desc: "Choose from 1,016 O*NET occupations or describe your goal in plain language. The catalog matcher resolves it to a real occupation — no invented roles.",
       mark: greenCircleMark,
       tier: "Beginner Trail"
     },
