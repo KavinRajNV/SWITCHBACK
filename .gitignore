@@ -24,7 +24,9 @@ frontend/node_modules/
 # (they are small and the app needs them to boot without a retrain). The SHAP
 # explainer is rebuilt from the model at startup, so its stale pickle is ignored.
 backend/app/artifacts/shap_explainer.joblib
-app/
+
+# stray duplicate artifacts dir at the repo root (NOT backend/app)
+/app/
 
 # --- raw source data: runtime reads MongoDB, not these files ---
 Datasets/

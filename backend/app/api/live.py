@@ -35,12 +35,18 @@ async def get_live_jobs(
     if not search_role and session_id:
         sess = get_session(session_id, db=db)
         if sess:
-            target_soc = sess.get("target_occupation_soc_code", "15-2051.00")
-            occ = request.app.state.occupations_dict.get(target_soc)
-            search_role = occ.get("title") if occ else "Data Scientist"
+            target_soc = sess.get("target_occupation_soc_code")
+            occ = request.app.state.occupations_dict.get(target_soc) if target_soc else None
+            search_role = occ.get("title") if occ else None
 
     if not search_role:
-        search_role = "Data Scientist"
+        # No role to search for — the dashboard renders its offline fallback banner.
+        return {
+            "status": "unavailable",
+            "source": "fallback",
+            "message": "No target role selected yet.",
+            "jobs": [],
+        }
 
     loc_clean = location or "India"
     cache_key = f"{search_role.strip().lower()}__in"

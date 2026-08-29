@@ -81,7 +81,9 @@ async def complete_milestone(req_data: MilestoneCompleteRequest, request: Reques
     # 4. Recompute path against target occupation
     old_path = sess.get("stored_path", [])
     old_len = len(old_path)
-    target_soc = sess.get("target_occupation_soc_code", "15-2051.00")
+    target_soc = sess.get("target_occupation_soc_code")
+    if not target_soc:
+        raise HTTPException(status_code=422, detail="Generate a learning path for a target role before completing milestones.")
 
     selected_market_role = sess.get("target_market_role_id")
     required_skills = sess.get("target_role_required_skills")
