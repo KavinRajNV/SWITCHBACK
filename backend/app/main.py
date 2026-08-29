@@ -28,6 +28,14 @@ async def lifespan(app: FastAPI):
 
     # 1. MongoDB handle
     db = get_db()
+    try:
+        db.command("ping")
+    except Exception as exc:  # pragma: no cover - startup guard
+        raise RuntimeError(
+            f"Cannot reach MongoDB at {settings.MONGODB_URI!r}. "
+            "Start the bundled offline DB with `docker compose up -d`, or set "
+            f"MONGODB_URI in .env to your own instance. (underlying error: {exc})"
+        ) from exc
     app.state.db = db
 
     # 2. SkillMatcher
