@@ -6,6 +6,7 @@ from rapidfuzz import fuzz, process
 from app.models.schemas import LearnerProfile, GoalProfile, SkillEvidence
 from app.nlp.parse_resume import parse_resume
 from app.nlp.goal_parser import parse_goal_text
+from app.nlp.nvidia_goal import extract_with_nvidia
 from app.api.session_store import create_session, get_session, update_session
 
 router = APIRouter(prefix="/api", tags=["Profile & Goal"])
@@ -56,7 +57,56 @@ async def profile_from_goal_text(req_data: GoalTextRequest, request: Request):
     Parses a free-text goal input, attaching to an existing session or creating a new session.
     """
     db = request.app.state.db
+    # Keep the deterministic parser as the contract/authority for catalog role
+    # matching, while NVIDIA extracts explicit baseline skills and fills in
+    # natural-language details the regex parser cannot reliably see.
     goal_profile = parse_goal_text(req_data.goal_text, db=db)
+    ai_result = extract_with_nvidia(req_data.goal_text)
+    if ai_result:
+        if not goal_profile.timeframe_days and isinstance(ai_result.get("timeframe_days"), int):
+            goal_profile.timeframe_days = max(1, ai_result["timeframe_days"])
+        if not goal_profile.hours_per_week and isinstance(ai_result.get("hours_per_week"), int):
+            goal_profile.hours_per_week = max(1, min(168, ai_result["hours_per_week"]))
+        if not goal_profile.background_hint and isinstance(ai_result.get("background_hint"), str):
+            goal_profile.background_hint = ai_result["background_hint"][:2000]
+
+        # If the model found a role that the catalog fuzzy matcher missed, run
+        # the same deterministic parser against that role phrase.
+        if not goal_profile.target_role and isinstance(ai_result.get("target_role"), str):
+            role_profile = parse_goal_text(ai_result["target_role"], db=db)
+            if role_profile.target_role:
+                goal_profile.target_role = role_profile.target_role
+                goal_profile.target_soc_code = role_profile.target_soc_code
+                goal_profile.needs_clarification = False
+
+    extracted_evidence = []
+    extracted_skills = []
+    if ai_result and isinstance(ai_result.get("skills"), list):
+        matcher = request.app.state.matcher
+        seen = set()
+        for item in ai_result["skills"]:
+            if not isinstance(item, dict) or not isinstance(item.get("skill"), str):
+                continue
+            raw_skill = item["skill"].strip()
+            if not raw_skill:
+                continue
+            match = matcher.match_direct(raw_skill) or next(iter(matcher.extract_skills(raw_skill)), None)
+            if not match or match.skill.lower() in seen:
+                continue
+            seen.add(match.skill.lower())
+            confidence = item.get("confidence", 6)
+            try:
+                confidence = max(1, min(10, int(confidence)))
+            except (TypeError, ValueError):
+                confidence = 6
+            extracted_skills.append(match.skill)
+            extracted_evidence.append(SkillEvidence(
+                skill=match.skill,
+                category=match.category,
+                confidence=confidence,
+                mention_count=1,
+                found_in_sections=["GOAL_TEXT_AI"],
+            ))
 
     session_id = req_data.session_id
     if session_id:
@@ -65,12 +115,28 @@ async def profile_from_goal_text(req_data: GoalTextRequest, request: Request):
             raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found.")
 
         target_soc = goal_profile.target_soc_code or sess.get("target_occupation_soc_code")
+        existing_profile = sess.get("learner_profile", {})
+        existing_evidence = existing_profile.get("extracted_skills", [])
+        existing_names = {item.get("skill", "").lower() for item in existing_evidence}
+        for evidence in extracted_evidence:
+            if evidence.skill.lower() not in existing_names:
+                existing_evidence.append(evidence.model_dump())
+        existing_profile["extracted_skills"] = existing_evidence
+        current_skills = list(dict.fromkeys(sess.get("current_skills", []) + extracted_skills))
         update_session(session_id, {
             "goal_profile": goal_profile.model_dump(),
-            "target_occupation_soc_code": target_soc
+            "target_occupation_soc_code": target_soc,
+            "learner_profile": existing_profile,
+            "current_skills": current_skills,
         }, db=db)
     else:
-        session_id = create_session(goal_profile=goal_profile, db=db)
+        learner_profile = LearnerProfile(extracted_skills=extracted_evidence)
+        session_id = create_session(
+            learner_profile=learner_profile,
+            goal_profile=goal_profile,
+            current_skills=extracted_skills,
+            db=db,
+        )
 
     return {
         "session_id": session_id,

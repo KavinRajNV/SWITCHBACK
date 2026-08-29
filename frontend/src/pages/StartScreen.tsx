@@ -141,7 +141,7 @@ export const StartScreen: React.FC = () => {
             Map Your Learning Frontier
           </h1>
           <p className="text-base sm:text-lg text-muted max-w-xl mx-auto leading-relaxed">
-            Choose how you would like to initialize your current skill profile. Recomputed deterministically without LLM calls.
+            Choose how you would like to initialize your current skill profile. Goal extraction is powered by NVIDIA AI and validated against our skill catalog.
           </p>
         </div>
 
@@ -338,7 +338,7 @@ export const StartScreen: React.FC = () => {
                   className="w-full px-4 py-3 rounded-xl bg-paper-dark/40 border border-contour text-ink text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber"
                 />
                 <p className="text-xs text-muted">
-                  Heuristic regex & string-distance matcher extracts target role, timeframe, and baseline skills without LLMs.
+                  NVIDIA AI extracts only the skills you explicitly claim, then the catalog matcher validates them before building your path.
                 </p>
               </div>
 
@@ -347,7 +347,7 @@ export const StartScreen: React.FC = () => {
                 disabled={!goalText.trim() || goalLoading}
                 className="w-full bg-forest hover:bg-forest-dark text-paper font-heading text-base font-semibold py-4 rounded-xl shadow-md transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {goalLoading ? 'Parsing Goal Prompt...' : 'Extract Profile & Review Skills →'}
+                {goalLoading ? 'NVIDIA is reading your goal...' : 'Extract Profile & Review Skills →'}
               </button>
             </form>
           )}

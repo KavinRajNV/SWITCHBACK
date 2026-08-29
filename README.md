@@ -39,6 +39,7 @@
 - Python 3.10+
 - Node.js 18+
 - MongoDB instance with populated `switchback` database
+- NVIDIA API key from [build.nvidia.com](https://build.nvidia.com/) for the Express Your Goal AI extractor
 
 ### 2. Backend Setup
 ```bash
@@ -50,9 +51,17 @@ venv\Scripts\activate
 source venv/bin/activate
 
 pip install -r requirements.txt
-python -m uvicorn app.main:app --reload --port 8000
+python -m uvicorn app.main:app --reload --port 8001
 ```
-Backend API will run at `http://localhost:8000` with Swagger docs at `http://localhost:8000/docs`.
+Backend API will run at `http://localhost:8001` with Swagger docs at `http://localhost:8001/docs`.
+
+Before starting the backend, add the NVIDIA settings to the project `.env` file:
+```bash
+NVIDIA_API_KEY=your_build_nvidia_api_key
+NVIDIA_MODEL=openai/gpt-oss-20b
+NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
+```
+The key stays server-side. If it is omitted or NVIDIA is temporarily unavailable, Express Your Goal falls back to the existing deterministic parser.
 
 ### 3. Frontend Setup
 ```bash

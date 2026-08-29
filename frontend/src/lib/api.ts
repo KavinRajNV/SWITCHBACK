@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:8000';
+// Switchback uses 8001 locally because port 8000 may be occupied by another
+// application in the shared development environment.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8001';
 
 export interface SkillEvidence {
   skill: string;
