@@ -1,6 +1,5 @@
-// Switchback uses 8001 locally because port 8000 may be occupied by another
-// application in the shared development environment.
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8001';
+// Backend dev server port. Override with VITE_API_BASE_URL (see frontend/.env.example).
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8011';
 
 export interface SkillEvidence {
   skill: string;
@@ -89,10 +88,42 @@ export interface QAResponse {
   structured_payload?: any;
 }
 
+export interface DashboardResponse {
+  session_id: string;
+  profile_summary: {
+    total_acquired_skills: number;
+    experience_years_est?: number | null;
+    current_predicted_salary_lpa: number;
+  };
+  target_role: {
+    onet_soc_code: string | null;
+    title: string | null;
+    market_median_salary_lpa?: number | null;
+  };
+  progress: {
+    completed_milestones_count: number;
+    remaining_milestones_count: number;
+    progress_percentage: number;
+  };
+  next_action_milestone: Milestone | null;
+  elevation_profile: ElevationPoint[];
+  recent_activities: Array<{ skill: string; evidence_type: string; completed_at: string; confidence?: number }>;
+}
+
 // 1. Health check
 export async function checkHealth() {
   const res = await fetch(`${API_BASE_URL}/health`);
   return res.json();
+}
+
+// Lightweight reachability probe for the "backend offline" banner.
+export async function pingBackend(): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/health`, { signal: AbortSignal.timeout(4000) });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 // 2. Upload Resume
@@ -319,7 +350,7 @@ export async function getRelatedRoles(soc_code: string): Promise<RelatedRolesRes
 }
 
 // 12. Get Dashboard Data
-export async function getDashboardData(session_id: string): Promise<any> {
+export async function getDashboardData(session_id: string): Promise<DashboardResponse> {
   const res = await fetch(`${API_BASE_URL}/api/dashboard?session_id=${encodeURIComponent(session_id)}`);
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));

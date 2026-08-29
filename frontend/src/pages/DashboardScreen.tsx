@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getDashboardData, getLiveJobs, completeMilestone } from '../lib/api';
-import type { JobPosting, Milestone } from '../lib/api';
+import type { JobPosting, Milestone, DashboardResponse } from '../lib/api';
 import { ElevationChart } from '../components/ElevationChart';
 import { WhatIfSlider } from '../components/WhatIfSlider';
 
@@ -10,9 +10,10 @@ import checkmarkSeal from '../assets/Forest_Green_Wax_Seal_Checkmark.webp';
 
 export const DashboardScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { sessionId, pathData, setPathData, completedSkills, completedLogs, addCompletedSkill } = useApp();
+  const { sessionId, pathData, setPathData, completedLogs, addCompletedSkill } = useApp();
 
   const [loading, setLoading] = useState(true);
+  const [dash, setDash] = useState<DashboardResponse | null>(null);
   const [jobs, setJobs] = useState<JobPosting[]>([]);
   const [jobsStatus, setJobsStatus] = useState<string>('loading');
 
@@ -21,6 +22,13 @@ export const DashboardScreen: React.FC = () => {
   const [evidenceType, setEvidenceType] = useState<'self_report' | 'project_log' | 'github_verified'>('project_log');
   const [completing, setCompleting] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
+
+  const loadDashboard = async () => {
+    if (!sessionId) return null;
+    const dashRes = await getDashboardData(sessionId);
+    setDash(dashRes);
+    return dashRes;
+  };
 
   // Fetch Dashboard Data & Adzuna Live Jobs
   useEffect(() => {
@@ -32,28 +40,44 @@ export const DashboardScreen: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const dashRes = await getDashboardData(sessionId);
-        const targetRole = dashRes.summary?.target_role || pathData?.target_occupation_title || 'Data Scientists';
-        const jobsRes = await getLiveJobs(targetRole);
-        setJobs(jobsRes.jobs || []);
-        setJobsStatus(jobsRes.status || 'unavailable');
+        const dashRes = await loadDashboard();
+        const targetRole = dashRes?.target_role?.title || pathData?.target_occupation_title;
+        if (targetRole) {
+          const jobsRes = await getLiveJobs(targetRole);
+          setJobs(jobsRes.jobs || []);
+          setJobsStatus(jobsRes.status || 'unavailable');
+        } else {
+          setJobsStatus('unavailable');
+        }
       } catch (err: any) {
+        // Session gone / backend unreachable — send the learner back to the start.
         console.error('Failed to load dashboard:', err);
+        navigate('/start');
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
-  const milestones = pathData?.milestones || [];
-  const elevationProfile = pathData?.elevation_profile || [];
-  const completedCount = completedSkills.length;
-  const totalSteps = (milestones.length + completedCount) || 1;
-  const progressPct = Math.round((completedCount / Math.max(totalSteps, 1)) * 100);
+  // Prefer authoritative backend values; fall back to locally-known path data only for the milestone cards.
+  const elevationProfile = dash?.elevation_profile ?? pathData?.elevation_profile ?? [];
+  const completedCount = dash?.progress.completed_milestones_count ?? 0;
+  const remainingCount = dash?.progress.remaining_milestones_count ?? (pathData?.milestones.length ?? 0);
+  const progressPct = dash ? Math.round(dash.progress.progress_percentage) : 0;
+  const totalAcquiredSkills = dash?.profile_summary.total_acquired_skills ?? 0;
+  const currentSalaryLpa =
+    elevationProfile[Math.min(completedCount, Math.max(elevationProfile.length - 1, 0))]?.cumulative_predicted_salary_lpa ??
+    dash?.profile_summary.current_predicted_salary_lpa ??
+    null;
+  const targetTitle = dash?.target_role.title ?? pathData?.target_occupation_title ?? null;
+  const targetSoc = dash?.target_role.onet_soc_code ?? pathData?.target_occupation_soc_code ?? null;
+  const marketMedian = dash?.target_role.market_median_salary_lpa ?? null;
 
-  const nextMilestone = milestones.length > 0 ? milestones[0] : null;
+  const nextMilestone: Milestone | null =
+    dash?.next_action_milestone ?? (pathData?.milestones && pathData.milestones.length > 0 ? pathData.milestones[0] : null);
 
   // Handle Mark Complete Submit
   const handleCompleteNext = async (e: React.FormEvent) => {
@@ -73,10 +97,12 @@ export const DashboardScreen: React.FC = () => {
         });
       }
 
+      // Re-pull real aggregates rather than hand-patching them.
+      await loadDashboard();
+
       setToastMsg(`Completed '${activeNextMilestone.skill}'! Saved ${res.milestones_saved} milestone(s).`);
       setActiveNextMilestone(null);
 
-      // Check if fully qualified now
       if (res.new_path_length === 0) {
         setTimeout(() => navigate('/celebration'), 1500);
       } else {
@@ -93,14 +119,16 @@ export const DashboardScreen: React.FC = () => {
     return (
       <div className="max-w-6xl mx-auto px-4 py-24 text-center space-y-4">
         <div className="w-10 h-10 border-3 border-forest border-t-transparent rounded-full animate-spin mx-auto" />
-        <div className="font-heading font-semibold text-forest text-base">Loading Real Dashboard Aggregates...</div>
+        <div className="font-heading font-semibold text-forest text-base">Loading dashboard aggregates…</div>
       </div>
     );
   }
 
+  const hasRole = Boolean(targetTitle);
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-8 py-12 space-y-10">
-      
+
       {/* Toast Notification */}
       {toastMsg && (
         <div className="fixed top-20 right-6 z-50 p-4 rounded-xl bg-forest text-paper shadow-2xl border border-paper/20 text-xs font-semibold animate-bounce flex items-center gap-3">
@@ -116,7 +144,14 @@ export const DashboardScreen: React.FC = () => {
             Learner Frontier Dashboard
           </h1>
           <p className="text-sm text-muted mt-1">
-            Target Role: <strong className="text-forest">{pathData?.target_occupation_title || 'Data Scientists'}</strong> | Session ID: <code className="text-xs">{sessionId?.slice(0, 8)}...</code>
+            {hasRole ? (
+              <>Target Role: <strong className="text-forest">{targetTitle}</strong></>
+            ) : (
+              <>No target role selected yet.{' '}
+                <button onClick={() => navigate('/target-role')} className="text-forest underline font-semibold">Pick one →</button>
+              </>
+            )}
+            {' '}| Session <code className="text-xs">{sessionId?.slice(0, 8)}…</code>
           </p>
         </div>
 
@@ -140,28 +175,30 @@ export const DashboardScreen: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-2xl bg-paper border border-contour/80 shadow-xs space-y-1">
           <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Acquired Baseline Skills</div>
-          <div className="font-heading text-2xl font-bold text-ink">{completedCount + 4} Skills</div>
-          <div className="text-[11px] text-forest">Extracted & Verified</div>
+          <div className="font-heading text-2xl font-bold text-ink">{totalAcquiredSkills} Skills</div>
+          <div className="text-[11px] text-forest">Extracted &amp; Verified</div>
         </div>
 
         <div className="p-5 rounded-2xl bg-paper border border-contour/80 shadow-xs space-y-1">
           <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Milestones Completed</div>
           <div className="font-heading text-2xl font-bold text-forest">{completedCount} Completed</div>
-          <div className="text-[11px] text-muted">{milestones.length} Remaining</div>
+          <div className="text-[11px] text-muted">{remainingCount} Remaining</div>
         </div>
 
         <div className="p-5 rounded-2xl bg-paper border border-contour/80 shadow-xs space-y-1">
-          <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Achieved LPA Elevation</div>
+          <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">
+            {completedCount > 0 ? 'Achieved LPA Elevation' : 'Predicted LPA (Current Skills)'}
+          </div>
           <div className="font-heading text-2xl font-bold text-ink">
-            ₹{elevationProfile[Math.min(completedCount, elevationProfile.length - 1)]?.cumulative_predicted_salary_lpa || 12.5} LPA
+            {currentSalaryLpa != null ? `₹${currentSalaryLpa} LPA` : '—'}
           </div>
           <div className="text-[11px] text-amber-dark font-semibold">Model-Predicted Trajectory</div>
         </div>
 
         <div className="p-5 rounded-2xl bg-paper border border-contour/80 shadow-xs space-y-1">
           <div className="text-xs text-muted font-heading font-semibold uppercase tracking-wider">Target Job Frontier</div>
-          <div className="font-heading text-lg font-bold text-ink truncate">{pathData?.target_occupation_title || 'Data Scientists'}</div>
-          <div className="text-[11px] text-muted">SOC: {pathData?.target_occupation_soc_code || '15-2051.00'}</div>
+          <div className="font-heading text-lg font-bold text-ink truncate">{targetTitle ?? 'Not selected'}</div>
+          <div className="text-[11px] text-muted">{targetSoc ? `SOC: ${targetSoc}` : 'Choose a role to begin'}</div>
         </div>
       </div>
 
@@ -177,7 +214,7 @@ export const DashboardScreen: React.FC = () => {
             </p>
           </div>
           <span className="text-xs font-semibold text-forest bg-forest/10 px-3 py-1 rounded-full border border-forest/20">
-            Real Session State Split
+            Live Session State
           </span>
         </div>
 
@@ -189,7 +226,7 @@ export const DashboardScreen: React.FC = () => {
 
       {/* NEXT ACTION CARD & WHAT-IF SIMULATOR GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Next Action Trigger Card (1 col) */}
         <div className="p-6 rounded-2xl bg-paper border-2 border-forest/40 shadow-md space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
@@ -203,16 +240,21 @@ export const DashboardScreen: React.FC = () => {
                   {nextMilestone.skill}
                 </h3>
                 <p className="text-xs text-muted leading-relaxed">
-                  {nextMilestone.explanation || `Key milestone skill to reach ${pathData?.target_occupation_title}`}
+                  {nextMilestone.explanation || (targetTitle ? `Key milestone skill to reach ${targetTitle}` : 'Key milestone skill on your path')}
                 </p>
                 <div className="text-xs text-forest font-semibold">
                   Cost weight: {nextMilestone.cost} | Step #{nextMilestone.step_number}
                 </div>
               </div>
-            ) : (
+            ) : hasRole ? (
               <div className="space-y-2 py-4">
                 <h3 className="font-heading text-2xl font-bold text-forest">Full Qualification Reached!</h3>
                 <p className="text-xs text-muted">You have completed all milestones for this role.</p>
+              </div>
+            ) : (
+              <div className="space-y-2 py-4">
+                <h3 className="font-heading text-xl font-bold text-ink">No path yet</h3>
+                <p className="text-xs text-muted">Select a target role to generate your milestone path.</p>
               </div>
             )}
           </div>
@@ -224,12 +266,19 @@ export const DashboardScreen: React.FC = () => {
             >
               Mark '{nextMilestone.skill}' Complete →
             </button>
-          ) : (
+          ) : hasRole ? (
             <button
               onClick={() => navigate('/celebration')}
               className="w-full bg-amber hover:bg-amber-dark text-paper font-heading text-sm font-semibold py-3.5 rounded-xl shadow-sm transition-all text-center"
             >
               Go to Celebration Screen →
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate('/target-role')}
+              className="w-full bg-forest hover:bg-forest-dark text-paper font-heading text-sm font-semibold py-3.5 rounded-xl shadow-sm transition-all text-center"
+            >
+              Select Target Role →
             </button>
           )}
         </div>
@@ -246,7 +295,7 @@ export const DashboardScreen: React.FC = () => {
         <div className="flex items-center justify-between border-b border-contour/60 pb-3">
           <div>
             <h2 className="font-heading text-xl font-bold text-ink">
-              Live Job Market Postings ({pathData?.target_occupation_title || 'Data Scientists'})
+              Live Job Market Postings{targetTitle ? ` (${targetTitle})` : ''}
             </h2>
             <p className="text-xs text-muted">
               Fetched via live Adzuna REST integration with MongoDB TTL cache
@@ -293,10 +342,12 @@ export const DashboardScreen: React.FC = () => {
           /* Graceful Failure Empty State Banner */
           <div className="p-6 rounded-xl bg-amber/10 border border-amber/30 text-center space-y-2">
             <div className="font-heading text-sm font-bold text-amber-dark">
-              Adzuna Live Market Strip Currently Unavailable
+              Live job strip currently unavailable
             </div>
             <p className="text-xs text-muted max-w-lg mx-auto">
-              Live Adzuna external API request timed out or rate-limited. Displaying local verified O*NET benchmark salary metrics (₹16.5 LPA Median) without breaking page layout.
+              {marketMedian != null
+                ? `Showing the local dataset benchmark instead: ₹${marketMedian} LPA median for this role.`
+                : 'The live Adzuna request timed out or is rate-limited. Page layout is unaffected.'}
             </p>
           </div>
         )}
@@ -305,7 +356,7 @@ export const DashboardScreen: React.FC = () => {
       {/* MILESTONE ACTIVITY TIMELINE LOG (ISO Timestamps) */}
       <div className="p-6 rounded-2xl bg-paper border border-contour/80 shadow-md space-y-4">
         <h2 className="font-heading text-xl font-bold text-ink">
-          Milestone Completion Log & Activity Streak ({completedLogs.length})
+          Milestone Completion Log &amp; Activity Streak ({completedLogs.length})
         </h2>
 
         {completedLogs.length === 0 ? (

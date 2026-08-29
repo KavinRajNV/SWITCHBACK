@@ -36,19 +36,26 @@ export const WhatIfSlider: React.FC = () => {
       setLoading(true);
       try {
         const res = await askQA(sessionId, 'what_if_i_already_know_x', selectedSkill);
+        const payload = res.structured_payload || {};
+        // The engine returns the recomputed path as `new_path`; derive which of
+        // the learner's current milestones drop out of it.
+        const newPathSkills = new Set<string>((payload.new_path || []).map((m: any) => (m.skill || '').toLowerCase()));
+        const currentMilestoneSkills = (pathData?.milestones || []).map((m) => m.skill);
+        const removed = currentMilestoneSkills.filter((s) => !newPathSkills.has(s.toLowerCase()));
         setWhatIfResult({
           answerText: res.answer_text,
-          payload: res.structured_payload,
+          payload: { ...payload, removed_milestones: removed },
         });
       } catch (err: any) {
         console.error('What-If simulation error:', err);
+        setWhatIfResult(null);
       } finally {
         setLoading(false);
       }
     }, 300);
 
     return () => clearTimeout(handler);
-  }, [sessionId, selectedSkill]);
+  }, [sessionId, selectedSkill, pathData]);
 
   const presetSkills = ['Python', 'SQL', 'AWS', 'Power BI', 'Machine Learning'];
 

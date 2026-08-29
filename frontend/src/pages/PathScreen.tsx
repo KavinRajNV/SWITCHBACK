@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { completeMilestone } from '../lib/api';
 import type { Milestone } from '../lib/api';
@@ -8,6 +9,7 @@ import paidBookletIcon from '../assets/Minimalist_Green_Book_with_Orange_Bookmar
 import checkmarkSeal from '../assets/Forest_Green_Wax_Seal_Checkmark.webp';
 
 export const PathScreen: React.FC = () => {
+  const navigate = useNavigate();
   const { sessionId, pathData, setPathData, addCompletedSkill } = useApp();
 
   // Filter state for courses: 'all' | 'free' | 'paid'
@@ -22,6 +24,24 @@ export const PathScreen: React.FC = () => {
   // Path data
   const milestones = pathData?.milestones || [];
   const elevationProfile = pathData?.elevation_profile || [];
+  const targetTitle = pathData?.target_occupation_title;
+
+  // No path generated yet — send the learner to pick a role rather than
+  // rendering a screen full of placeholder "Data Scientists" copy.
+  if (!pathData) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-24 text-center space-y-4">
+        <h1 className="font-heading text-2xl font-bold text-ink">No learning path yet</h1>
+        <p className="text-sm text-muted">Choose a target role and we'll compute your milestone path.</p>
+        <button
+          onClick={() => navigate('/target-role')}
+          className="bg-forest hover:bg-forest-dark text-paper font-heading text-sm font-semibold px-6 py-3 rounded-xl shadow-md transition-all"
+        >
+          Select Target Role →
+        </button>
+      </div>
+    );
+  }
 
   // Custom SVG Area Chart path calculations
   const renderElevationChart = () => {
@@ -133,7 +153,7 @@ export const PathScreen: React.FC = () => {
             Your Learning Path & Elevation Profile
           </h1>
           <p className="text-sm text-muted mt-1">
-            Target Role: <strong className="text-forest">{pathData?.target_occupation_title || 'Data Scientists'}</strong>
+            Target Role: <strong className="text-forest">{targetTitle}</strong>
           </p>
         </div>
 
