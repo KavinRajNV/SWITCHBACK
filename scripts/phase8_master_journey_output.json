@@ -1,5 +1,5 @@
 {
-  "session_id": "e694ce65-38c7-4e4b-981c-f99b6c6908f9",
+  "session_id": "515f0ea8-7c39-41da-bec5-3435f9fce509",
   "added_skills": [
     "Python",
     "SQL",
@@ -11,7 +11,7 @@
     "C",
     "C++"
   ],
-  "target_role": "Data Scientists",
+  "target_role": "Data Scientist",
   "related_roles": [
     {
       "onet_soc_code": "15-2041.00",

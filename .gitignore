@@ -1,13 +1,44 @@
+# --- secrets ---
 .env
+frontend/.env
+
+# --- python ---
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .pytest_cache/
 *.egg-info/
-data/processed/
-backend/app/artifacts/
 .venv/
 venv/
+backend/.venv/
+.uv-cache/
+
+# --- node / build output ---
+node_modules/
+frontend/dist/
+frontend/node_modules/
+
+# --- ML artifacts ---
+# salary_model.joblib, skill_graph.pkl and feature_manifest.json are committed
+# (they are small and the app needs them to boot without a retrain). The SHAP
+# explainer is rebuilt from the model at startup, so its stale pickle is ignored.
+backend/app/artifacts/shap_explainer.joblib
+app/
+
+# --- raw source data: runtime reads MongoDB, not these files ---
+Datasets/
+data/processed/
+data/raw/
+
+# --- vendored reference projects (not part of Switchback) ---
+Only_ref_from_git_project/
+
+# --- editors / os ---
 .idea/
 .vscode/
+.DS_Store
+Thumbs.db
+
+# --- pnpm store (never commit) ---
+.pnpm-store/
