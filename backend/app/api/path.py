@@ -54,6 +54,7 @@ async def generate_learning_path(req_data: PathGenerateRequest, request: Request
     path_milestones_raw = generate_path(
         current_skills, target_soc, graph,
         occupations_enriched=occ if market_role_id else None,
+        matcher=request.app.state.matcher,
     )
 
     # 2. Owned skill SHAP contributions

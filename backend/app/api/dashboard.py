@@ -23,15 +23,16 @@ async def get_dashboard(request: Request, session_id: str = Query(..., descripti
 
     lp = sess.get("learner_profile", {})
     curr_skills = set(sess.get("current_skills", []))
-    target_soc = sess.get("target_occupation_soc_code", "15-2051.00")
+    target_soc = sess.get("target_occupation_soc_code")
     completed_log = sess.get("completed_milestones", [])
     stored_path = sess.get("stored_path", [])
 
-    occ = occupations_dict.get(target_soc)
-    if not occ:
-        occ = db.occupations_enriched.find_one({"onet_soc_code": target_soc})
+    occ = None
+    if target_soc:
+        occ = occupations_dict.get(target_soc) or db.occupations_enriched.find_one({"onet_soc_code": target_soc})
 
-    target_title = occ.get("title", target_soc) if occ else target_soc
+    # No fabricated fallback: if the learner hasn't picked a role yet, say so.
+    target_title = occ.get("title") if occ else (target_soc or None)
     target_median_salary = occ.get("market_median_salary_lpa") if occ else None
 
     # Calculate progress %

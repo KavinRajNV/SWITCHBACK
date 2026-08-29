@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import joblib
 
+from app.config import settings
 from app.db.mongo_client import get_db
 from app.data_pipeline.skill_matcher import SkillMatcher
 from app.ml.features import load_feature_manifest, ARTIFACTS_DIR
@@ -102,16 +103,18 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Switchback API Server",
-    description="Personalized learning-path recommender backend API (Zero LLM API calls).",
+    description="Personalized learning-path recommender backend API. "
+                "Recommendations are deterministic and data-grounded; any LLM call is "
+                "optional and never on the fact path.",
     version="1.0.0",
     lifespan=lifespan
 )
 
-# Permissive CORS for hackathon demo
+# CORS: explicit origin allow-list, no credentials (the API uses no cookies).
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -119,15 +122,13 @@ app.add_middleware(
 # Global exception handler
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    print(f"[Global Exception Handler] Unhandled error on {request.method} {request.url}: {exc}")
-    return JSONResponse(
-        status_code=500,
-        content={
-            "error": "InternalServerError",
-            "detail": str(exc),
-            "path": str(request.url.path)
-        }
-    )
+    import traceback
+    print(f"[Global Exception Handler] Unhandled error on {request.method} {request.url}:")
+    traceback.print_exc()
+    body = {"error": "InternalServerError", "path": str(request.url.path)}
+    if settings.APP_ENV == "development":
+        body["detail"] = str(exc)
+    return JSONResponse(status_code=500, content=body)
 
 # Health endpoint
 @app.get("/health", tags=["Health"])

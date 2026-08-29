@@ -114,11 +114,21 @@ async def test_qa_all_eight_questions(client):
         "explain_confidence_score"
     ]
 
+    # what_if_i_already_know_x requires an explicit skill to test (no silent default).
+    extra = {"what_if_i_already_know_x": {"extra_skill": "AWS"}}
     for q_id in questions:
-        res = await client.post("/api/qa/ask", json={"session_id": session_id, "question_id": q_id})
+        payload = {"session_id": session_id, "question_id": q_id}
+        payload.update(extra.get(q_id, {}))
+        res = await client.post("/api/qa/ask", json=payload)
         assert res.status_code == 200, f"Question '{q_id}' failed with status {res.status_code}"
         assert res.json()["question_id"] == q_id
         assert len(res.json()["answer_text"]) > 0
+
+    # And confirm it *does* reject a missing skill rather than inventing one.
+    res_missing = await client.post(
+        "/api/qa/ask", json={"session_id": session_id, "question_id": "what_if_i_already_know_x"}
+    )
+    assert res_missing.status_code == 422
 
 @pytest.mark.anyio
 async def test_live_jobs_endpoint(client):

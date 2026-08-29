@@ -89,7 +89,7 @@ async def complete_milestone(req_data: MilestoneCompleteRequest, request: Reques
         {"combined_required_skills": required_skills, "taxonomy_required_skills": []}
         if selected_market_role and required_skills else None
     )
-    new_path_raw = generate_path(curr_skills, target_soc, graph, occupations_enriched=market_occ)
+    new_path_raw = generate_path(curr_skills, target_soc, graph, occupations_enriched=market_occ, matcher=matcher)
     new_len = len(new_path_raw)
     milestones_saved = max(old_len - new_len, 0)
 

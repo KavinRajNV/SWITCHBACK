@@ -29,11 +29,16 @@ def get_graph() -> nx.DiGraph:
             _CACHED_GRAPH = pickle.load(f)
     return _CACHED_GRAPH
 
+DEFAULT_MAX_MILESTONES = 12
+
+
 def generate_path(
     current_skills: Union[Set[str], List[str]],
     target_occupation_soc_code: str,
     graph: Optional[nx.DiGraph] = None,
-    occupations_enriched: Optional[Dict[str, Any]] = None
+    occupations_enriched: Optional[Dict[str, Any]] = None,
+    matcher: Optional["SkillMatcher"] = None,
+    max_milestones: int = DEFAULT_MAX_MILESTONES,
 ) -> List[Dict[str, Any]]:
     """
     Generates a personalized multi-skill learning path using greedy nearest-fringe expansion (Dijkstra-driven).
@@ -47,13 +52,19 @@ def generate_path(
         "is_essential": bool
       }
     ]
+
+    ``matcher`` should be the process-wide cached ``SkillMatcher`` (``app.state.matcher``);
+    when omitted it is rebuilt from Mongo, which is slow and only meant for scripts/tests.
+    ``max_milestones`` caps the returned path to the N cheapest-to-reach steps
+    (the fringe expansion is cost-ordered, so these are the most reachable);
+    callers that need the full gap (e.g. what-if deltas) pass a large value.
     """
     if graph is None:
         graph = get_graph()
 
     # Defensive input skill canonicalization (Patch E)
-    db = get_db()
-    matcher = SkillMatcher.from_mongo(db)
+    if matcher is None:
+        matcher = SkillMatcher.from_mongo(get_db())
 
     canonical_current = set()
     for s in current_skills:
@@ -72,6 +83,7 @@ def generate_path(
 
     # Resolve target occupation data
     if occupations_enriched is None:
+        db = get_db()
         occ_doc = db.occupations_enriched.find_one({"onet_soc_code": target_occupation_soc_code})
         if not occ_doc:
             occ_doc = db.occupations_enriched.find_one({"title": {"$regex": target_occupation_soc_code, "$options": "i"}})
@@ -140,5 +152,12 @@ def generate_path(
             "is_essential": best_candidate in essential_skills
         })
         step_num += 1
+
+    if max_milestones is not None and len(milestones) > max_milestones:
+        print(
+            f"[Path Sequencer] Gap has {len(milestones)} skills; returning the "
+            f"{max_milestones} most reachable as the active path."
+        )
+        milestones = milestones[:max_milestones]
 
     return milestones

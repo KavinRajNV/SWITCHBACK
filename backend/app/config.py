@@ -12,9 +12,22 @@ else:
     load_dotenv()
 
 class Settings:
-    MONGODB_URI: str = os.getenv("MONGODB_URI", "")
+    APP_ENV: str = os.getenv("APP_ENV", "development")
+
+    # Defaults to a local mongod so the app runs offline against the bundled
+    # snapshot with an otherwise-empty .env; set MONGODB_URI to use Atlas.
+    MONGODB_URI: str = os.getenv("MONGODB_URI") or "mongodb://localhost:27017"
     MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "switchback")
-    
+
+    # Comma-separated browser origins allowed to call the API.
+    ALLOWED_ORIGINS: list = [
+        o.strip() for o in os.getenv(
+            "ALLOWED_ORIGINS",
+            "http://localhost:5173,http://127.0.0.1:5173",
+        ).split(",") if o.strip()
+    ]
+
+
     ADZUNA_APP_ID: str = os.getenv("ADZUNA_APP_ID", "")
     ADZUNA_APP_KEY: str = os.getenv("ADZUNA_APP_KEY", "")
     YOUTUBE_API_KEY: str = os.getenv("YOUTUBE_API_KEY", "")

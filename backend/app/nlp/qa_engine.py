@@ -64,9 +64,12 @@ def answer_how_long_will_this_take(goal_profile: GoalProfile, path_length: int) 
         }
     )
 
-def answer_what_if_i_already_know_x(extra_skill: str, current_skills: Union[Set[str], List[str]], target_soc: str, graph: Any = None) -> QAResponse:
+def answer_what_if_i_already_know_x(extra_skill: str, current_skills: Union[Set[str], List[str]], target_soc: str, graph: Any = None, matcher: Any = None) -> QAResponse:
     """
     3. what_if_i_already_know_x: Recomputes path with extra skill added to current skills.
+
+    Uses a large ``max_milestones`` so the milestone delta stays visible even when
+    the full skill gap is larger than the display cap.
     """
     if graph is None:
         graph = get_graph()
@@ -75,8 +78,8 @@ def answer_what_if_i_already_know_x(extra_skill: str, current_skills: Union[Set[
     new_skills = set(curr_set)
     new_skills.add(extra_skill)
 
-    old_path = generate_path(curr_set, target_soc, graph)
-    new_path = generate_path(new_skills, target_soc, graph)
+    old_path = generate_path(curr_set, target_soc, graph, matcher=matcher, max_milestones=60)
+    new_path = generate_path(new_skills, target_soc, graph, matcher=matcher, max_milestones=60)
 
     saved_steps = len(old_path) - len(new_path)
     if saved_steps > 0:
