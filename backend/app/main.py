@@ -14,7 +14,7 @@ from app.db.mongo_client import get_db
 from app.data_pipeline.skill_matcher import SkillMatcher
 from app.ml.features import load_feature_manifest, ARTIFACTS_DIR
 from app.ml.explainer_boot import build_startup_explainer
-from app.api import profile, path, qa, progress, dashboard, live, timeline
+from app.api import profile, path, qa, progress, dashboard, live, timeline, assistant
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -161,3 +161,4 @@ app.include_router(progress.router)
 app.include_router(dashboard.router)
 app.include_router(live.router)
 app.include_router(timeline.router)
+app.include_router(assistant.router)

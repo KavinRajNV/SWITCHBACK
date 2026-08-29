@@ -69,7 +69,9 @@ def extract_with_nvidia(goal_text: str) -> Optional[Dict[str, Any]]:
         with urlrequest.urlopen(req, timeout=settings.NVIDIA_TIMEOUT_SECONDS) as response:
             body = json.loads(response.read().decode("utf-8"))
         content = body["choices"][0]["message"]["content"]
+        if not isinstance(content, str):
+            return None
         return _json_from_content(content)
-    except (HTTPError, URLError, TimeoutError, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+    except Exception as exc:  # optional extractor — the deterministic parser still runs
         print(f"[NVIDIA goal extraction] provider unavailable or invalid response: {exc}")
         return None
