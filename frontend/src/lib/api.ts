@@ -88,6 +88,20 @@ export interface QAResponse {
   structured_payload?: any;
 }
 
+export interface AssistantReply {
+  session_id: string;
+  intent: string;
+  rationale: string;
+  reply: string;
+  structured_payload?: any;
+  suggestions: string[];
+}
+
+export interface ChatTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 export interface DashboardResponse {
   session_id: string;
   profile_summary: {
@@ -306,6 +320,24 @@ export async function askQA(session_id: string, question_id: string, extra_skill
     throw new Error(errorData.detail || 'Q&A inquiry failed.');
   }
 
+  return res.json();
+}
+
+// 10b. Conversational assistant — free-text learner questions
+export async function sendAssistantMessage(
+  session_id: string,
+  message: string,
+  history: ChatTurn[] = []
+): Promise<AssistantReply> {
+  const res = await fetch(`${API_BASE_URL}/api/assistant/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_id, message, history }),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.detail || 'The assistant is unavailable right now.');
+  }
   return res.json();
 }
 

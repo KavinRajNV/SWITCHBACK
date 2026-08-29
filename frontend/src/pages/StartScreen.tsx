@@ -28,6 +28,8 @@ export const StartScreen: React.FC = () => {
   // Goal text state — empty by default, user types their own
   const [goalText, setGoalText] = useState('');
   const [goalLoading, setGoalLoading] = useState(false);
+  const [goalClarify, setGoalClarify] = useState<string | null>(null); // follow-up question, if any
+  const [clarifyText, setClarifyText] = useState('');
 
   // Handle skill input autocomplete
   const handleSkillInputChange = async (val: string) => {
@@ -98,27 +100,50 @@ export const StartScreen: React.FC = () => {
     }
   };
 
-  // Submit 3: Free-Text Goal
-  const handleGoalSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!goalText.trim()) return;
-
+  // Submit 3: Free-Text Goal — asks one follow-up instead of guessing a role.
+  const runGoal = async (text: string, isClarification: boolean) => {
     setGoalLoading(true);
     try {
-      resetSession(); // clear any stale previous session
-      const data = await parseGoalText(goalText);
+      if (!isClarification) resetSession(); // clear any stale previous session
+      const data = await parseGoalText(text);
+
+      const gp = data.goal_profile;
+      const roleMissing = !gp?.target_role || gp?.needs_clarification;
+
+      if (roleMissing && !isClarification) {
+        // First pass couldn't pin a target role — ask, don't assume.
+        setGoalClarify(
+          "I couldn't pin down which role you're aiming for. Which job title is your goal (e.g. Data Scientist, Backend Developer, Financial Analyst)?"
+        );
+        setGoalLoading(false);
+        return;
+      }
+
       setSessionId(data.session_id);
       setLearnerProfile(data.learner_profile);
       setGoalProfile(data.goal_profile);
-      if (data.target_occupation) {
-        setTargetOccupation(data.target_occupation);
-      }
+      if (data.target_occupation) setTargetOccupation(data.target_occupation);
+      setGoalClarify(null);
       navigate('/skills');
     } catch (err: any) {
       alert(err.message || 'Failed to parse goal prompt.');
     } finally {
       setGoalLoading(false);
     }
+  };
+
+  const handleGoalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!goalText.trim()) return;
+    runGoal(goalText, false);
+  };
+
+  const handleClarifySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!clarifyText.trim()) return;
+    // Re-run with the original goal plus the clarified role; proceed even if
+    // still fuzzy (the Skills/Target-Role screens let the learner correct it).
+    runGoal(`${goalText.trim()}. My target role is ${clarifyText.trim()}.`, true);
   };
 
   return (
@@ -141,7 +166,7 @@ export const StartScreen: React.FC = () => {
             Map Your Learning Frontier
           </h1>
           <p className="text-base sm:text-lg text-muted max-w-xl mx-auto leading-relaxed">
-            Choose how you would like to initialize your current skill profile. Goal extraction is powered by NVIDIA AI and validated against our skill catalog.
+            Choose how you would like to initialize your current skill profile. Everything you enter is validated against our skill catalog before we build your path.
           </p>
         </div>
 
@@ -338,16 +363,39 @@ export const StartScreen: React.FC = () => {
                   className="w-full px-4 py-3 rounded-xl bg-paper-dark/40 border border-contour text-ink text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber"
                 />
                 <p className="text-xs text-muted">
-                  NVIDIA AI extracts only the skills you explicitly claim, then the catalog matcher validates them before building your path.
+                  We extract only the skills you explicitly claim, then the catalog matcher validates them before building your path.
                 </p>
               </div>
+
+              {goalClarify && (
+                <div className="p-4 rounded-xl bg-amber/10 border border-amber/30 space-y-2">
+                  <p className="text-xs text-amber-dark font-semibold">{goalClarify}</p>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={clarifyText}
+                      onChange={(e) => setClarifyText(e.target.value)}
+                      placeholder="e.g. Data Scientist"
+                      className="flex-1 px-3 py-2 rounded-lg bg-paper border border-contour text-ink text-xs focus:outline-none focus:ring-1 focus:ring-amber"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleClarifySubmit}
+                      disabled={!clarifyText.trim() || goalLoading}
+                      className="bg-forest hover:bg-forest-dark text-paper text-xs font-semibold px-4 py-2 rounded-lg disabled:opacity-50"
+                    >
+                      {goalLoading ? '…' : 'Continue'}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <button
                 type="submit"
                 disabled={!goalText.trim() || goalLoading}
                 className="w-full bg-forest hover:bg-forest-dark text-paper font-heading text-base font-semibold py-4 rounded-xl shadow-md transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {goalLoading ? 'NVIDIA is reading your goal...' : 'Extract Profile & Review Skills →'}
+                {goalLoading ? 'Reading your goal…' : 'Extract Profile & Review Skills →'}
               </button>
             </form>
           )}

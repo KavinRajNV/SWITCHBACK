@@ -250,6 +250,16 @@ export const PathScreen: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-forest font-semibold">Cost weight: {ms.cost}</span>
                   <button
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent('switchback:ask', { detail: `Why is ${ms.skill} on my path?` })
+                      )
+                    }
+                    className="text-xs font-heading font-semibold text-forest hover:text-forest-dark underline underline-offset-2"
+                  >
+                    Why this?
+                  </button>
+                  <button
                     onClick={() => setActiveMilestone(ms)}
                     className="bg-forest hover:bg-forest-dark text-paper text-xs font-heading font-semibold px-4 py-2 rounded-xl shadow-xs transition-all"
                   >

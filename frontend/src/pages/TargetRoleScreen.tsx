@@ -171,14 +171,24 @@ export const TargetRoleScreen: React.FC = () => {
         </div>
 
         {selectedRole && (
-          <div className="p-4 rounded-xl bg-forest/10 border border-forest/20 flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-forest/10 border border-forest/20 flex items-center justify-between gap-3">
             <div>
               <div className="text-xs text-muted">Target Occupation Selected:</div>
               <div className="font-heading text-base font-bold text-forest">{selectedRole.title}</div>
               <div className="text-xs text-muted">SOC Code: {selectedRole.onet_soc_code}</div>
+              <button
+                onClick={() =>
+                  window.dispatchEvent(
+                    new CustomEvent('switchback:ask', { detail: `Why should I target ${selectedRole.title}?` })
+                  )
+                }
+                className="mt-1 text-xs font-heading font-semibold text-forest hover:text-forest-dark underline underline-offset-2"
+              >
+                Why this role?
+              </button>
             </div>
             {selectedRole.market_median_salary_lpa && (
-              <div className="text-right">
+              <div className="text-right shrink-0">
                 <div className="text-xs text-muted">Market Median Salary:</div>
                 <div className="font-heading text-lg font-bold text-ink">₹{selectedRole.market_median_salary_lpa} LPA</div>
               </div>
