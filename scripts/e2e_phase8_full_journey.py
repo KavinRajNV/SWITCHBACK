@@ -1,9 +1,10 @@
 import json
+import os
 import urllib.request
 import urllib.parse
 import sys
 
-API_BASE = 'http://localhost:8000'
+API_BASE = os.getenv('SWITCHBACK_API_BASE', 'http://localhost:8011')
 
 def post_json(endpoint, payload):
     req = urllib.request.Request(

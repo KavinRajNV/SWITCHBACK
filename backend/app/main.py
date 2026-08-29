@@ -12,6 +12,7 @@ import joblib
 from app.db.mongo_client import get_db
 from app.data_pipeline.skill_matcher import SkillMatcher
 from app.ml.features import load_feature_manifest, ARTIFACTS_DIR
+from app.ml.explainer_boot import build_startup_explainer
 from app.api import profile, path, qa, progress, dashboard, live, timeline
 
 @asynccontextmanager
@@ -43,12 +44,12 @@ async def lifespan(app: FastAPI):
     salary_model = joblib.load(model_path)
     app.state.salary_model = salary_model
 
-    # 5. SHAP Explainer
-    explainer_path = ARTIFACTS_DIR / "shap_explainer.joblib"
-    if not explainer_path.exists():
-        raise FileNotFoundError(f"SHAP explainer artifact not found at: {explainer_path}")
-    shap_explainer = joblib.load(explainer_path)
-    app.state.shap_explainer = shap_explainer
+    # 5. SHAP Explainer — always rebuilt from the salary model at startup.
+    # The committed shap_explainer.joblib embeds interpreter-bound numba code
+    # objects and fails to unpickle on other machines; a fresh TreeExplainer is
+    # equivalent and builds in <0.1s with no database access.
+    app.state.shap_explainer = build_startup_explainer(salary_model)
+    print("  SHAP TreeExplainer built fresh from salary model (no pickle).")
 
     # 6. Pickled Skill Graph
     graph_path = ARTIFACTS_DIR / "skill_graph.pkl"
