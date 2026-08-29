@@ -35,41 +35,37 @@
 
 ## 🛠️ Local Development Setup
 
+See **[SETUP.md](SETUP.md)** for the full offline walkthrough. Quick version:
+
 ### 1. Prerequisites
-- Python 3.10+
-- Node.js 18+
-- MongoDB instance with populated `switchback` database
-- NVIDIA API key from [build.nvidia.com](https://build.nvidia.com/) for the Express Your Goal AI extractor
+- **Python 3.11** (exact minor — the pinned `scikit-learn`/`numpy`/`scipy` have no wheels for 3.12+; `backend/.python-version` pins it)
+- **Node.js 18+**
+- **[uv](https://docs.astral.sh/uv/)** for the Python environment
+- A MongoDB instance — either the bundled offline snapshot (`docker compose up -d`, no keys needed) or your own `MONGODB_URI` in `.env`
 
-### 2. Backend Setup
+### 2. One command
+
 ```bash
-cd backend
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On Unix:
-source venv/bin/activate
-
-pip install -r requirements.txt
-python -m uvicorn app.main:app --reload --port 8001
+cp .env.example .env          # optional: add ADZUNA / GITHUB / NVIDIA keys
+./scripts/dev.sh              # macOS/Linux/Git-Bash
+#  ── or ──
+pwsh scripts/dev.ps1          # Windows PowerShell
 ```
-Backend API will run at `http://localhost:8001` with Swagger docs at `http://localhost:8001/docs`.
 
-Before starting the backend, add the NVIDIA settings to the project `.env` file:
+This creates `backend/.venv` (Python 3.11), installs both dependency sets, starts the API on `http://127.0.0.1:8011` (Swagger at `/docs`) and the frontend on `http://127.0.0.1:5173`.
+
+### 3. Manual (if you prefer)
+
 ```bash
-NVIDIA_API_KEY=your_build_nvidia_api_key
-NVIDIA_MODEL=openai/gpt-oss-20b
-NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
-```
-The key stays server-side. If it is omitted or NVIDIA is temporarily unavailable, Express Your Goal falls back to the existing deterministic parser.
+uv venv backend/.venv --python 3.11
+uv pip install --python backend/.venv -r backend/requirements.txt
+backend/.venv/bin/python -m uvicorn app.main:app --app-dir backend --port 8011 --reload
 
-### 3. Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
+npm --prefix frontend install
+npm --prefix frontend run dev
 ```
-Frontend development server will run at `http://localhost:5173`.
+
+**Optional keys** (`.env`, all server-side, all with graceful fallbacks): `ADZUNA_APP_ID`/`ADZUNA_APP_KEY` (live job strip), `GITHUB_TOKEN` (higher GitHub rate limit), `YOUTUBE_API_KEY` (free video suggestions), `NVIDIA_API_KEY` (nicer goal / assistant phrasing — never used for facts). Frontend: `frontend/.env` sets `VITE_API_BASE_URL` (defaults to `http://127.0.0.1:8011`).
 
 ---
 
