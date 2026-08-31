@@ -73,6 +73,7 @@ def parse_resume(
 
     # 3. Skill confidence scoring
     extracted_skills = score_skills(raw_sections, matcher=matcher)
+
     if not extracted_skills:
         warnings.append("No canonical vocabulary skills extracted from document text.")
 

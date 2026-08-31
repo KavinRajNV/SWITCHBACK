@@ -32,10 +32,8 @@ class Settings:
     ADZUNA_APP_KEY: str = os.getenv("ADZUNA_APP_KEY", "")
     YOUTUBE_API_KEY: str = os.getenv("YOUTUBE_API_KEY", "")
     GITHUB_TOKEN: str = os.getenv("GITHUB_TOKEN", "")
-    NVIDIA_API_KEY: str = os.getenv("NVIDIA_API_KEY", "")
-    NVIDIA_MODEL: str = os.getenv("NVIDIA_MODEL", "openai/gpt-oss-20b")
-    NVIDIA_BASE_URL: str = os.getenv("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
-    NVIDIA_TIMEOUT_SECONDS: int = int(os.getenv("NVIDIA_TIMEOUT_SECONDS", "30"))
+
+    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", os.getenv("openai", ""))
 
     BASE_DIR: Path = BASE_DIR
     

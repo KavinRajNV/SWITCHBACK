@@ -136,40 +136,48 @@ export const WhatIfSlider: React.FC = () => {
 
       {/* Simulation Result Delta Display */}
       {!loading && whatIfResult && (
-        <div className="p-5 rounded-2xl bg-paper-dark/40 border border-forest/30 space-y-3">
-          <div className="flex items-center justify-between border-b border-contour/60 pb-2">
-            <span className="font-heading text-sm font-bold text-forest">
-              Simulated Scenario: Acquired '{selectedSkill}'
-            </span>
-            {whatIfResult.payload?.milestones_saved !== undefined && (
-              <span className="text-xs font-bold text-paper bg-amber px-2.5 py-0.5 rounded-full shadow-xs">
-                Saves {whatIfResult.payload.milestones_saved} Milestone(s)!
+        <div className="p-6 rounded-2xl bg-forest/5 border-2 border-forest/40 space-y-4 shadow-sm">
+          <div className="flex items-center justify-between border-b border-forest/20 pb-3">
+            <h3 className="font-heading text-lg font-bold text-forest flex items-center gap-2">
+              <span>🔮 Simulation Complete: Knowing '{selectedSkill}'</span>
+            </h3>
+            {whatIfResult.payload?.milestones_saved > 0 ? (
+              <span className="text-sm font-bold text-paper bg-forest px-3 py-1 rounded-full shadow-md animate-pulse">
+                You save {whatIfResult.payload.milestones_saved} milestone(s)!
+              </span>
+            ) : (
+              <span className="text-sm font-bold text-ink/70 bg-contour px-3 py-1 rounded-full">
+                No milestones saved
               </span>
             )}
           </div>
 
-          <p className="text-xs text-ink/90 leading-relaxed whitespace-pre-wrap">
+          <p className="text-sm text-ink leading-relaxed font-medium">
             {whatIfResult.answerText}
           </p>
 
           {whatIfResult.payload && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
-              <div className="p-2.5 rounded-xl bg-paper border border-contour">
-                <div className="text-[10px] text-muted">Original Path Length:</div>
-                <div className="font-heading font-bold text-ink">
-                  {whatIfResult.payload.original_path_length || pathData?.path_length || 0} Milestones
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
+              <div className="p-4 rounded-xl bg-paper shadow-sm border border-contour/60 text-center">
+                <div className="text-xs uppercase tracking-wide text-muted font-bold mb-1">Original Path</div>
+                <div className="font-heading text-2xl font-bold text-ink">
+                  {whatIfResult.payload.original_path_length || pathData?.path_length || 0} <span className="text-sm font-normal text-muted">steps</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-xl bg-paper border border-contour">
-                <div className="text-[10px] text-muted">New Path Length:</div>
-                <div className="font-heading font-bold text-forest">
-                  {whatIfResult.payload.new_path_length || 0} Milestones
+              
+              <div className="p-4 rounded-xl bg-forest text-paper shadow-md text-center transform scale-105">
+                <div className="text-xs uppercase tracking-wide text-paper/80 font-bold mb-1">New Fast-Track</div>
+                <div className="font-heading text-3xl font-bold">
+                  {whatIfResult.payload.new_path_length || 0} <span className="text-sm font-normal text-paper/80">steps</span>
                 </div>
               </div>
-              <div className="p-2.5 rounded-xl bg-paper border border-contour col-span-2 sm:col-span-1">
-                <div className="text-[10px] text-muted">Milestones Removed:</div>
-                <div className="font-heading font-bold text-amber-dark">
-                  {whatIfResult.payload.removed_milestones?.join(', ') || 'None'}
+              
+              <div className="p-4 rounded-xl bg-amber-light/20 shadow-sm border border-amber/30 text-center sm:col-span-1">
+                <div className="text-xs uppercase tracking-wide text-amber-dark font-bold mb-1">Skipped Skills</div>
+                <div className="font-heading text-lg font-bold text-amber-dark flex items-center justify-center h-full pb-4">
+                  {whatIfResult.payload.removed_milestones?.length > 0 
+                    ? whatIfResult.payload.removed_milestones.join(', ') 
+                    : 'None'}
                 </div>
               </div>
             </div>

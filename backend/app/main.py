@@ -79,14 +79,14 @@ async def lifespan(app: FastAPI):
     def _market_id(title: str) -> str:
         return "market::" + _re.sub(r'[^a-z0-9]+', '_', title.lower()).strip('_')
 
-    market_docs = list(db.market_roles.find({}, {"_id": 0}))
+    market_docs = list(db.jobs_indian_v2.find({}, {"_id": 0}))
     market_roles_dict = {}
     for d in market_docs:
         mid = _market_id(d["title"])
         d["market_role_id"] = mid
         market_roles_dict[mid] = d
     app.state.market_roles_dict = market_roles_dict
-    print(f"  Loaded {len(market_roles_dict)} market-native roles from market_roles collection.")
+    print(f"  Loaded {len(market_roles_dict)} market-native roles from jobs_indian_v2 collection.")
 
     print(f"SUCCESS: Loaded {len(occupations_dict)} occupations, {graph.number_of_nodes()} graph nodes, {graph.number_of_edges()} edges, & 323D salary model.")
 
@@ -121,7 +121,7 @@ app = FastAPI(
 # CORS: explicit origin allow-list, no credentials (the API uses no cookies).
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -128,61 +128,6 @@ def classify_intent(text: str, matcher: Any = None) -> Tuple[str, Dict[str, Any]
     return top_intent, params
 
 
-# --------------------------------------------------------------------------- #
-# Optional NVIDIA intent assist (never writes answer text)
-# --------------------------------------------------------------------------- #
-_NVIDIA_SYS = (
-    "You route a learner's question to one label. Reply with JSON only: "
-    '{"intent": <one of %s or "general">, "skill": <a skill name mentioned, or null>}. '
-    "Do not answer the question."
-)
-
-
-def _nvidia_intent(text: str) -> Optional[Dict[str, Any]]:
-    if not settings.NVIDIA_API_KEY:
-        return None
-    labels = list(INTENTS.keys())
-    payload = {
-        "model": settings.NVIDIA_MODEL,
-        "messages": [
-            {"role": "system", "content": _NVIDIA_SYS % labels},
-            {"role": "user", "content": text.strip()[:2000]},
-        ],
-        "temperature": 0,
-        "max_tokens": 120,
-        "stream": False,
-    }
-    req = urlrequest.Request(
-        f"{settings.NVIDIA_BASE_URL.rstrip('/')}/chat/completions",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {settings.NVIDIA_API_KEY}",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        method="POST",
-    )
-    try:
-        with urlrequest.urlopen(req, timeout=settings.NVIDIA_TIMEOUT_SECONDS) as resp:
-            body = json.loads(resp.read().decode("utf-8"))
-        content = body["choices"][0]["message"]["content"]
-        if not isinstance(content, str):
-            return None
-        content = re.sub(r"<think>.*?</think>", "", content, flags=re.S | re.I)
-        start, end = content.find("{"), content.rfind("}")
-        if start < 0 or end <= start:
-            return None
-        obj = json.loads(content[start:end + 1])
-        intent = obj.get("intent")
-        if intent in INTENTS or intent == "general":
-            out: Dict[str, Any] = {"intent": intent}
-            if isinstance(obj.get("skill"), str) and obj["skill"].strip():
-                out["skill"] = obj["skill"].strip()
-            return out
-    except Exception as exc:  # optional assist — never break the request
-        print(f"[assistant] NVIDIA intent assist unavailable: {exc}")
-    return None
-
 
 # --------------------------------------------------------------------------- #
 # Routing
@@ -221,6 +166,7 @@ def _general_summary(sess: Dict[str, Any], salary_model: Any, manifest: Any) -> 
 
 def route(
     message: str,
+    history: Any,
     sess: Dict[str, Any],
     *,
     db: Any,
@@ -232,20 +178,6 @@ def route(
 ) -> Dict[str, Any]:
     """Classify ``message`` and answer it from grounded data. Returns a dict for the API layer."""
     intent, params = classify_intent(message, matcher)
-
-    # LLM assist is a fallback only: pay its latency when the keyword classifier
-    # was not confident, never on the common cases it already nails.
-    if intent == "general":
-        ai = _nvidia_intent(message)
-        if ai and ai["intent"] != "general":
-            intent = ai["intent"]
-            if ai.get("skill"):
-                params = {"skill": ai["skill"]} if intent in _SKILL_SCOPED else params
-            elif not params.get("skill") and intent in _SKILL_SCOPED:
-                # model chose a skill-scoped intent but named no skill — try the matcher again
-                s = _extract_skill(message, matcher)
-                if s:
-                    params = {"skill": s}
 
     lp = LearnerProfile(**sess.get("learner_profile", {}))
     gp = GoalProfile(**sess.get("goal_profile", {}))
@@ -309,10 +241,27 @@ def route(
             qa = qa_engine.answer_explain_confidence_score(conf_skill, lp)
 
     if qa is not None:
+        from app.nlp.openai_extract import fluent_narrative_openai
+        # If history contains objects (e.g. ChatTurn models), convert them to dict
+        hist_dicts = []
+        if history:
+            for h in history:
+                if hasattr(h, "model_dump"):
+                    hist_dicts.append(h.model_dump())
+                elif isinstance(h, dict):
+                    hist_dicts.append(h)
+                else:
+                    hist_dicts.append({"role": getattr(h, "role", "user"), "content": getattr(h, "content", "")})
+                    
+        fluent_answer = fluent_narrative_openai(message, hist_dicts, {
+            "engine_answer": qa.answer_text,
+            "data": qa.structured_payload
+        })
+        
         return {
             "intent": intent,
             "rationale": rationale,
-            "reply": qa.answer_text,
+            "reply": fluent_answer or qa.answer_text,
             "structured_payload": qa.structured_payload,
         }
 

@@ -75,7 +75,7 @@ def relevance_score(course: Dict[str, Any], skill: str) -> float:
     return (title_hits * 10.0) + (detail_hits * 2.0) + rating + math.log1p(reviews + subscribers) / 5.0
 
 
-def rank_courses(courses: Iterable[Dict[str, Any]], skill: str, limit: int = 3) -> List[Dict[str, Any]]:
+def rank_courses(courses: Iterable[Dict[str, Any]], skill: str, limit: int = 7) -> List[Dict[str, Any]]:
     scored = [(relevance_score(course, skill), course) for course in courses]
     scored = [(score, course) for score, course in scored if score > 0]
     scored.sort(key=lambda item: item[0], reverse=True)

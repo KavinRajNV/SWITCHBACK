@@ -47,6 +47,7 @@ async def chat(req: ChatRequest, request: Request):
 
     result = assistant.route(
         req.message,
+        req.history,
         sess,
         db=state.db,
         graph=state.graph,

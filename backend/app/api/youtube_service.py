@@ -123,8 +123,17 @@ async def fetch_youtube_videos(skill: str, db: Database) -> List[Dict[str, Any]]
 
     # 2. API key required
     if not api_key:
-        logger.info("[YouTube] YOUTUBE_API_KEY not configured — skipping fetch.")
-        return []
+        logger.info("[YouTube] YOUTUBE_API_KEY not configured — providing fallback search link.")
+        import urllib.parse
+        encoded_skill = urllib.parse.quote(f"{skill} tutorial full course")
+        return [{
+            "title": f"Top free '{skill}' tutorials on YouTube",
+            "url": f"https://www.youtube.com/results?search_query={encoded_skill}",
+            "source": "YouTube (Search)",
+            "channel_title": "YouTube Community",
+            "published_at": "",
+            "is_paid": False
+        }]
 
     # 3. Select topically-matching channel names from allowlist
     all_channel_docs = list(db.youtube_allowlist.find(
@@ -218,6 +227,50 @@ async def fetch_youtube_videos(skill: str, db: Database) -> List[Dict[str, Any]]
                 f"for skill='{skill}'. Returning no video rather than an unrelated one."
             )
         all_videos = filtered_videos
+
+    # If YouTube API failed or returned 0 relevant videos, fallback to lightweight HTML scraping
+    if not all_videos:
+        import urllib.parse
+        encoded_skill = urllib.parse.quote(f"{skill} tutorial full course")
+        search_url = f"https://www.youtube.com/results?search_query={encoded_skill}"
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                html_resp = await client.get(search_url)
+                import re as _re, json as _json
+                match = _re.search(r'var ytInitialData = ({.*?});</script>', html_resp.text)
+                if match:
+                    data = _json.loads(match.group(1))
+                    contents = data.get('contents', {}).get('twoColumnSearchResultsRenderer', {}).get('primaryContents', {}).get('sectionListRenderer', {}).get('contents', [{}])[0].get('itemSectionRenderer', {}).get('contents', [])
+                    for item in contents:
+                        if 'videoRenderer' in item:
+                            vr = item['videoRenderer']
+                            vid = vr.get('videoId')
+                            vtitle = vr.get('title', {}).get('runs', [{}])[0].get('text', '')
+                            vchannel = vr.get('ownerText', {}).get('runs', [{}])[0].get('text', '')
+                            if vid and vtitle:
+                                all_videos.append({
+                                    "title": vtitle,
+                                    "url": f"https://www.youtube.com/watch?v={vid}",
+                                    "channel_title": vchannel,
+                                    "source": "YouTube (Free)",
+                                    "published_at": "",
+                                    "is_paid": False
+                                })
+                                if len(all_videos) >= MAX_RESULTS_PER_SKILL:
+                                    break
+        except Exception as fallback_err:
+            logger.debug(f"[YouTube] Scraper fallback failed: {fallback_err}")
+
+        # If scraping also yielded 0 videos, just give the search link
+        if not all_videos:
+            all_videos.append({
+                "title": f"Top free '{skill}' tutorials on YouTube",
+                "url": search_url,
+                "source": "YouTube (Search)",
+                "channel_title": "YouTube Community",
+                "published_at": "",
+                "is_paid": False
+            })
 
     # 6. Cache (even empty, to avoid quota burn on re-requests)
     db[YOUTUBE_CACHE_COLLECTION].update_one(

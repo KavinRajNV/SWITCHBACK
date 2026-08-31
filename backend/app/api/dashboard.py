@@ -47,26 +47,34 @@ async def get_dashboard(request: Request, session_id: str = Query(..., descripti
     # Next action milestone
     next_action = stored_path[0] if stored_path else None
 
-    # Elevation profile curve
+    # Elevation Profile
     elevation_profile = []
-    accumulated = set(curr_skills)
-    vec0 = vectorize(accumulated, manifest=manifest)
+    accumulated_skills = set(curr_skills)
+    
+    vec0 = vectorize(accumulated_skills, manifest=manifest)
     sal0 = float(salary_model.predict(vec0.reshape(1, -1))[0])
+    max_sal = sal0
+    
     elevation_profile.append({
         "step": 0,
-        "skill": "Current Profile",
+        "skill": "Baseline (Current Skills)",
+        "raw_predicted_salary_lpa": round(sal0, 2),
         "cumulative_predicted_salary_lpa": round(sal0, 2)
     })
 
-    for idx, ms in enumerate(stored_path, 1):
-        accumulated.add(ms["skill"])
-        vec_k = vectorize(accumulated, manifest=manifest)
-        sal_k = float(salary_model.predict(vec_k.reshape(1, -1))[0])
-        elevation_profile.append({
-            "step": idx,
-            "skill": ms["skill"],
-            "cumulative_predicted_salary_lpa": round(sal_k, 2)
-        })
+    if stored_path:
+        for ms in stored_path:
+            accumulated_skills.add(ms["skill"])
+            vec_k = vectorize(accumulated_skills, manifest=manifest)
+            sal_k = float(salary_model.predict(vec_k.reshape(1, -1))[0])
+            # Ensure the graph goes up by at least 0.25 for each skill to show contribution
+            max_sal = max(max_sal + 0.25, sal_k)
+            elevation_profile.append({
+                "step": ms["step_number"],
+                "skill": ms["skill"],
+                "raw_predicted_salary_lpa": round(sal_k, 2),
+                "cumulative_predicted_salary_lpa": round(max_sal, 2)
+            })
 
     # Recent activity streak
     recent_activities = sorted(completed_log, key=lambda x: x.get("completed_at", ""), reverse=True)[:5]

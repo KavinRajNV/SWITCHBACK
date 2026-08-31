@@ -1,46 +1,78 @@
-# --- secrets ---
-.env
-frontend/.env
-
-# --- python ---
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-.pytest_cache/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
-.venv/
-venv/
-backend/.venv/
-.uv-cache/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
 
-# --- node / build output ---
+# Node
 node_modules/
-frontend/dist/
-frontend/node_modules/
+dist/
+build/
+.npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# --- ML artifacts ---
-# salary_model.joblib, skill_graph.pkl and feature_manifest.json are committed
-# (they are small and the app needs them to boot without a retrain). The SHAP
-# explainer is rebuilt from the model at startup, so its stale pickle is ignored.
-backend/app/artifacts/shap_explainer.joblib
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# stray duplicate artifacts dir at the repo root (NOT backend/app)
-/app/
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
 
-# --- raw source data: runtime reads MongoDB, not these files ---
-Datasets/
-data/processed/
-data/raw/
-
-# --- vendored reference projects (not part of Switchback) ---
-Only_ref_from_git_project/
-
-# --- editors / os ---
+# IDEs and Editors
 .idea/
 .vscode/
-.DS_Store
-Thumbs.db
+*.swp
+*.swo
 
-# --- pnpm store (never commit) ---
-.pnpm-store/
+# Project specific
+backend/cache/
+*.log
+
+# Large datasets and generated data
+Datasets/
+data/processed/
+data/mongo_snapshot/
+
+# Large/generated ML artifacts
+backend/app/artifacts/
+
+# Generated/local backend data
+backend/backend/
+
+# Archives
+*.zip

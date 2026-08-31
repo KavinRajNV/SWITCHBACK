@@ -111,7 +111,7 @@ export const TargetRoleScreen: React.FC = () => {
                   key={rec.market_role_id || rec.onet_soc_code}
                   onClick={() => handleSelectRole({ onet_soc_code: rec.onet_soc_code, title: rec.title, market_role_id: rec.market_role_id, market_median_salary_lpa: rec.market_median_salary_lpa })}
                   className={`p-4 rounded-2xl border text-left transition-all hover:shadow-md hover:-translate-y-0.5 ${
-                    selectedRole?.onet_soc_code === rec.onet_soc_code
+                    (selectedRole?.market_role_id && rec.market_role_id ? selectedRole.market_role_id === rec.market_role_id : selectedRole?.onet_soc_code === rec.onet_soc_code)
                       ? 'border-forest bg-forest/10 shadow-md'
                       : 'border-contour/80 bg-paper hover:border-forest/40'
                   }`}

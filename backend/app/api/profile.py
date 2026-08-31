@@ -6,7 +6,7 @@ from rapidfuzz import fuzz, process
 from app.models.schemas import LearnerProfile, GoalProfile, SkillEvidence
 from app.nlp.parse_resume import parse_resume
 from app.nlp.goal_parser import parse_goal_text
-from app.nlp.nvidia_goal import extract_with_nvidia
+
 from app.api.session_store import create_session, get_session, update_session
 
 router = APIRouter(prefix="/api", tags=["Profile & Goal"])
@@ -61,7 +61,12 @@ async def profile_from_goal_text(req_data: GoalTextRequest, request: Request):
     # matching, while NVIDIA extracts explicit baseline skills and fills in
     # natural-language details the regex parser cannot reliably see.
     goal_profile = parse_goal_text(req_data.goal_text, db=db)
-    ai_result = extract_with_nvidia(req_data.goal_text)
+    
+    extracted_evidence = []
+    extracted_skills = []
+    
+    from app.nlp.openai_extract import extract_goal_openai
+    ai_result = extract_goal_openai(req_data.goal_text)
     if ai_result:
         if not goal_profile.timeframe_days and isinstance(ai_result.get("timeframe_days"), int):
             goal_profile.timeframe_days = max(1, ai_result["timeframe_days"])
@@ -69,9 +74,7 @@ async def profile_from_goal_text(req_data: GoalTextRequest, request: Request):
             goal_profile.hours_per_week = max(1, min(168, ai_result["hours_per_week"]))
         if not goal_profile.background_hint and isinstance(ai_result.get("background_hint"), str):
             goal_profile.background_hint = ai_result["background_hint"][:2000]
-
-        # If the model found a role that the catalog fuzzy matcher missed, run
-        # the same deterministic parser against that role phrase.
+        
         if not goal_profile.target_role and isinstance(ai_result.get("target_role"), str):
             role_profile = parse_goal_text(ai_result["target_role"], db=db)
             if role_profile.target_role:
@@ -79,34 +82,28 @@ async def profile_from_goal_text(req_data: GoalTextRequest, request: Request):
                 goal_profile.target_soc_code = role_profile.target_soc_code
                 goal_profile.needs_clarification = False
 
-    extracted_evidence = []
-    extracted_skills = []
-    if ai_result and isinstance(ai_result.get("skills"), list):
+        # Extract current skills from the AI result
         matcher = request.app.state.matcher
-        seen = set()
-        for item in ai_result["skills"]:
-            if not isinstance(item, dict) or not isinstance(item.get("skill"), str):
-                continue
-            raw_skill = item["skill"].strip()
-            if not raw_skill:
-                continue
-            match = matcher.match_direct(raw_skill) or next(iter(matcher.extract_skills(raw_skill)), None)
-            if not match or match.skill.lower() in seen:
-                continue
-            seen.add(match.skill.lower())
-            confidence = item.get("confidence", 6)
-            try:
-                confidence = max(1, min(10, int(confidence)))
-            except (TypeError, ValueError):
-                confidence = 6
-            extracted_skills.append(match.skill)
-            extracted_evidence.append(SkillEvidence(
-                skill=match.skill,
-                category=match.category,
-                confidence=confidence,
-                mention_count=1,
-                found_in_sections=["GOAL_TEXT_AI"],
-            ))
+        yoe = ai_result.get("years_of_experience")
+        # Score logic: base 5, +1 for each year, capped at 10
+        conf = 5
+        if isinstance(yoe, (int, float)) and yoe > 0:
+            conf = min(10, 5 + int(yoe))
+            
+        raw_ai_skills = ai_result.get("current_skills") or []
+        if isinstance(raw_ai_skills, list) and matcher:
+            for skill_str in raw_ai_skills:
+                if not isinstance(skill_str, str): continue
+                match = matcher.match_direct(skill_str)
+                if match:
+                    extracted_skills.append(match.skill)
+                    extracted_evidence.append(SkillEvidence(
+                        skill=match.skill,
+                        category=match.category,
+                        confidence=conf,
+                        mention_count=1,
+                        found_in_sections=["GOAL_AI_EXTRACTED"]
+                    ))
 
     session_id = req_data.session_id
     if session_id:

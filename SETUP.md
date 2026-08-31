@@ -1,104 +1,121 @@
-# Running Switchback locally
+# Detailed Local Setup Guide
 
-Two ways to get the database: **A) bundled offline snapshot via Docker** (nothing
-to sign up for) or **B) your own MongoDB**. Then start the app the same way for both.
-
----
-
-## Prerequisites
-
-| Tool | Version | Why |
-|---|---|---|
-| [uv](https://docs.astral.sh/uv/getting-started/installation/) | latest | creates the Python 3.11 env (it can fetch 3.11 itself) |
-| Node.js | 18+ | frontend build/dev server |
-| Docker Desktop | any recent | **only for option A** (offline MongoDB) |
-
-> The backend **must** run on **Python 3.11** — the pinned `scikit-learn` /
-> `numpy` / `scipy` (needed to load the trained model without a retrain) have no
-> wheels for 3.12+. `backend/.python-version` pins it and `uv` handles the rest.
+Welcome to Switchback! Follow these precise steps to get the frontend and backend running locally on your machine.
 
 ---
 
-## 1. Get the code + config
+## 1. Prerequisites
 
+Before you begin, ensure you have the following installed on your system:
+- **Python 3.11+**
+- **Node.js (v18+)** and **npm**
+- **MongoDB**: You must have a MongoDB server running locally (usually on `mongodb://localhost:27017`) or a remote MongoDB Atlas URI.
+
+---
+
+## 2. Backend Setup
+
+The backend is built with FastAPI and requires Python packages listed in `requirements.txt`.
+
+### Step 2.1: Navigate to the Backend Directory
+Open your terminal and navigate to the project root, then into the backend folder:
 ```bash
-git clone <repo-url> switchback && cd switchback
-cp .env.example .env          # every value is optional; see comments in the file
+cd backend
 ```
 
-## 2A. Database — bundled offline snapshot (recommended)
-
+### Step 2.2: Create a Virtual Environment
+It is highly recommended to isolate your Python dependencies:
 ```bash
-docker compose up -d          # starts MongoDB and restores data/mongo_snapshot/
+# On Windows
+python -m venv .venv
+
+# On macOS/Linux
+python3 -m venv .venv
 ```
 
-Leave `MONGODB_URI` **blank** in `.env` — the app then talks to
-`mongodb://localhost:27017`. First `up` takes ~30 s to restore ~56 MB.
-
-_No Docker?_ If you have a local `mongod` running, load the snapshot with pymongo:
-
+### Step 2.3: Activate the Virtual Environment
 ```bash
-uv run --python 3.11 --with pymongo python scripts/db/restore_local.py
+# On Windows
+.venv\Scripts\activate
+
+# On macOS/Linux
+source .venv/bin/activate
 ```
 
-## 2B. Database — your own MongoDB
-
-Set `MONGODB_URI` in `.env` to a MongoDB instance that already has the
-`switchback` database populated (or run the pipeline in
-[`data/DATA_PROVENANCE.md`](data/DATA_PROVENANCE.md)).
-
-## 3. Start everything
-
+### Step 2.4: Install Requirements
+With the virtual environment activated, install the backend dependencies:
 ```bash
-./scripts/dev.sh              # macOS / Linux / Git-Bash
-pwsh scripts/dev.ps1          # Windows PowerShell
+pip install -r requirements.txt
 ```
 
-This creates `backend/.venv` (Python 3.11) via uv, installs backend + frontend
-dependencies, and starts:
+---
 
-- **API** → http://127.0.0.1:8011  (Swagger UI at `/docs`, health at `/health`)
-- **Web** → http://127.0.0.1:5173
+## 3. Environment Variables (.env)
 
-Open the web URL and click **Get Started**.
+The project requires a `.env` file at the root of the project to configure API keys and the database connection.
 
-### Manual start (equivalent)
+1. Navigate to the project root:
+   ```bash
+   cd ..
+   ```
+2. Copy the template:
+   ```bash
+   cp .env.example .env
+   ```
+3. Open `.env` in a text editor and fill in the values:
+   - `MONGODB_URI`: Set to your MongoDB connection string (e.g., `mongodb://localhost:27017/` for local, or your Atlas URL).
+   - `OPENAI_API_KEY`: Add your OpenAI key to enable the conversational assistant.
+   - `YOUTUBE_API_KEY`: (Optional) Add to fetch real-time YouTube video recommendations. If omitted, a scraper fallback will be used.
+   - `ADZUNA_APP_ID` & `ADZUNA_APP_KEY`: (Optional) Add to enable live job postings.
 
+---
+
+## 4. Frontend Setup
+
+The frontend is built with React and Vite.
+
+### Step 4.1: Install Node Modules
+Navigate to the project root (if not already there), and install frontend dependencies:
 ```bash
-uv venv backend/.venv --python 3.11
-uv pip install --python backend/.venv -r backend/requirements.txt
-backend/.venv/bin/python -m uvicorn app.main:app --app-dir backend --port 8011 --reload
-#           ^ backend/.venv/Scripts/python.exe on Windows
-
 npm --prefix frontend install
+```
+
+### Step 4.2: Frontend Environment Variables
+Copy the frontend environment template:
+```bash
 cp frontend/.env.example frontend/.env
+```
+*(No modifications are typically needed here for a default local setup, as it points to `http://localhost:8011` by default).*
+
+---
+
+## 5. Running the Application
+
+You need two separate terminal windows (or tabs) to run both servers concurrently.
+
+### Terminal 1: Start the Backend
+Make sure your Python virtual environment is activated, then run:
+```bash
+cd backend
+uvicorn app.main:app --host 127.0.0.1 --port 8011 --reload
+```
+*(The backend will start on `http://127.0.0.1:8011`)*
+
+### Terminal 2: Start the Frontend
+From the project root, run:
+```bash
 npm --prefix frontend run dev
 ```
+*(The frontend will start on `http://localhost:5173`)*
 
 ---
 
-## Verify
+## 6. Verification
 
+To verify that the backend is working correctly, you can hit the health check endpoint:
 ```bash
 curl http://127.0.0.1:8011/health
-# {"status":"healthy", ...}
-
-SWITCHBACK_API_BASE=http://127.0.0.1:8011 \
-  backend/.venv/bin/python scripts/e2e_phase8_full_journey.py
-# ... PHASE 8 MASTER E2E INTEGRATION TEST PASSED 100% ...
-
-cd backend && ../backend/.venv/bin/python -m pytest -q
-# 67 passed
 ```
+You should receive a JSON response indicating `"status": "healthy"`.
 
----
-
-## Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `Cannot reach MongoDB at 'mongodb://localhost:27017'` | `docker compose up -d`, or set `MONGODB_URI` in `.env` |
-| `code() argument 13 must be str` on startup | stale `backend/app/artifacts/shap_explainer.joblib` — delete it (it is rebuilt at boot) |
-| backend install fails compiling scipy/scikit-learn | you are not on Python 3.11 — `uv venv backend/.venv --python 3.11` |
-| browser calls blocked by CORS | add your web origin to `ALLOWED_ORIGINS` in `.env` |
-| frontend can't reach API | set `VITE_API_BASE_URL` in `frontend/.env` |
+You can now open `http://localhost:5173` in your browser and use Switchback!

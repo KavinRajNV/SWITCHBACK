@@ -33,7 +33,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-sm text-paper/80 max-w-md leading-relaxed">
-              A personalized learning-path recommender built on real trained models, graph algorithms, and verified market data for HCLTech AMPlified 2026.
+              A personalized learning-path recommender built on real trained models, graph algorithms, and verified market data.
             </p>
 
             {/* Quiet trust signal */}
@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-paper/60 gap-4">
           <div>
-            © {new Date().getFullYear()} Switchback Recommender. Built for HCLTech AMPlified 2026.
+            © {new Date().getFullYear()} Switchback Recommender. All Rights Reserved.
           </div>
           <div className="flex items-center gap-6">
             <span>FastAPI + MongoDB + React</span>

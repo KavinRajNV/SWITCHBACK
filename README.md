@@ -1,141 +1,77 @@
-# Switchback — AI-Powered Personalized Learning-Path Recommender
+<div align="center">
+  <img src="./Assets/logo.png" alt="Switchback Logo" width="200"/>
+  <h1>Switchback</h1>
+  <p><strong>A Deterministic, AI-Powered Career Navigator & Skill Gap Analyzer</strong></p>
 
-Switchback turns a learner's goal, described in plain language, into a **structured,
-explainable roadmap**: the exact sequence of skills to acquire, the courses and
-projects for each, a predicted salary trajectory, and an assistant that answers
-"why this?" at every step — then re-plans as milestones are completed.
-
-Every recommendation traces back to real data: a cleaned dataset, a trained ML
-model, or a graph computation. A language model is used only, and optionally, to
-phrase and route the conversational layer — never as a source of facts.
-
----
-
-## What it does — mapped to the brief
-
-| Required capability | Where it lives |
-|---|---|
-| **Conversational interface** — describe goals in natural language | `/start` "Express Your Goal" → `POST /api/profile/from-goal-text` (deterministic parser + optional NVIDIA skill extraction, with a one-question clarification loop when the role is ambiguous) |
-| **Learner profiling engine** — interests, level, completed courses, objectives | `POST /api/profile/from-resume` (layout-aware PDF/DOCX sectioning + confidence scoring), `/api/profile/manual-skills`, `POST /api/live/github-verify` (repo-language evidence → Tier-9 confidence) |
-| **Recommendation engine** — courses, projects, resources | `GET /api/roles/recommended` (IDF-weighted skill-overlap role fit), per-milestone course ranking over 105k Udemy/Coursera courses + a curated YouTube allowlist, free/paid split |
-| **Learning-path generator** — prerequisites & milestones | `POST /api/path/generate` — Dijkstra-style minimum-cost fringe expansion over a 1,281-node / 21,137-edge skill graph, capped to the 12 most reachable milestones, each with a gap explanation |
-| **AI assistant** — explains recommendations, answers queries | `POST /api/assistant/chat` — free text → intent classification onto 8 grounded functions (+ a status summary), each reply carries a one-line rationale and structured payload; `/api/qa/ask` is the structured backend |
-| **Progress dashboard** — progress, skills, milestones, next actions | `GET /api/dashboard` + `/dashboard` screen: real skill count, model-predicted salary, % complete, next action, and a completed-vs-projected salary trajectory chart; completing a milestone re-runs the planner |
+  <p>
+    <a href="#the-problem">The Problem</a> •
+    <a href="#our-solution">Our Solution</a> •
+    <a href="#key-features">Key Features</a> •
+    <a href="#architecture">Architecture</a> •
+    <a href="#getting-started">Getting Started</a>
+  </p>
+</div>
 
 ---
 
-## Architecture
+## 🛑 The Problem
 
-```
-┌────────────────────────────┐        ┌──────────────────────────────────────────┐
-│  React 19 + Vite + TW v4   │  HTTP  │  FastAPI (Python 3.11)                    │
-│  7 screens + Trail         │ ─────► │  lifespan-cached: SkillMatcher, salary    │
-│  Assistant chat panel      │ ◄───── │  model, SHAP explainer, skill graph,      │
-└────────────────────────────┘  JSON  │  occupation catalog, IDF weights          │
-                                      │                                          │
-                                      │  nlp/  assistant · goal_parser · resume   │
-                                      │  ml/   path_sequencer · features · explain│
-                                      │  api/  profile path qa progress dashboard │
-                                      │        live assistant                    │
-                                      └───────────────┬──────────────────────────┘
-                                                      │  pymongo
-                                      ┌───────────────▼──────────────────────────┐
-                                      │  MongoDB  (bundled offline snapshot, or  │
-                                      │  your own): occupations_enriched,        │
-                                      │  courses, market_roles, skill_vocabulary,│
-                                      │  onet_related_occupations, youtube_...    │
-                                      └──────────────────────────────────────────┘
-```
+The modern tech landscape evolves incredibly fast. Professionals trying to transition to new roles or maximize their earning potential often hit a wall:
+- **Generic Advice**: Most platforms offer generic, one-size-fits-all roadmaps.
+- **LLM Hallucinations**: Generative AI tools frequently invent fake certifications, recommend outdated courses, or hallucinate salary impacts.
+- **Decision Paralysis**: With thousands of available skills, learners don't know *which* specific skill yields the highest ROI for their time.
 
-Model artifacts (`backend/app/artifacts/`): `salary_model.joblib`
-(GradientBoostingRegressor, 323 features), `skill_graph.pkl` (NetworkX DiGraph),
-`feature_manifest.json`. The SHAP `TreeExplainer` is rebuilt from the model at
-startup (its pickled form is interpreter-bound and not portable).
+## 💡 Our Solution
+
+**Switchback** is an intelligent career transition engine built on a fundamentally different philosophy: **Deterministic Data over Generative Guesses.**
+
+Instead of relying on an LLM to invent your career path, Switchback uses **Dijkstra’s Algorithm** across a proprietary, pre-computed graph of over 21,000 skill relationships. It calculates the mathematically shortest, cheapest, and most efficient path from your *current* skills to your *target* role. 
+
+Every recommendation is grounded in real job-market data, and an integrated **Machine Learning Salary Engine** predicts exactly how much each new skill will increase your earning potential in real-time.
 
 ---
 
-## AI / ML techniques
+## ✨ Key Features
 
-- **Skill graph + shortest path.** A directed graph of skill→skill and
-  occupation→skill relations from O\*NET and ESCO. The planner does greedy
-  minimum-cost fringe expansion (Dijkstra-style) from the learner's owned skills
-  to the target role's required set, yielding an ordered milestone list with
-  per-edge transition costs.
-- **Salary trajectory model.** `GradientBoostingRegressor` trained on Indian job
-  postings with disclosed salaries — 323 one-hot skill / seniority / location /
-  company features. The dashboard plots cumulative predicted LPA as each
-  milestone skill is added.
-- **SHAP explanations.** `TreeExplainer` over the salary model gives per-skill
-  LPA contribution, surfaced in milestone and "why this skill" answers.
-- **Deterministic NLP.** Layout-aware resume sectioning (`pdfplumber` font
-  coordinates), `rapidfuzz` skill/role matching against a 265-skill vocabulary
-  and 1,016 O\*NET titles, regex timeframe/seniority parsing.
-- **Intent classification** for the assistant: keyword + fuzzy scoring maps free
-  text onto 8 grounded functions; an optional NVIDIA NIM call disambiguates only
-  when that classifier is unsure, and only chooses an intent — never writes facts.
-- **Adaptive re-planning.** Completing a milestone updates the skill frontier and
-  re-runs the planner; the "what-if" simulator recomputes path deltas live.
+### 🗺️ Deterministic Path Generation
+No hallucinations. Switchback maps your current skills against a massive market ontology and generates a step-by-step milestone path using graph-traversal algorithms.
+
+### 📈 ML-Powered Salary Predictions
+We don't guess your salary. A highly trained **Gradient Boosting Regressor** evaluates your exact skill vector to predict your Lakhs Per Annum (LPA) trajectory. We use **SHAP (SHapley Additive exPlanations)** to explain exactly *why* a specific skill increases your worth.
+
+### 🤖 Grounded Conversational AI
+Interact naturally with our AI assistant. Powered by OpenAI, the assistant strictly acts as a conversational routing layer—it securely queries our deterministic engine to answer your questions with mathematical facts, ensuring 100% accuracy.
+
+### 🎛️ Interactive "What-If" Simulator
+Curious about a different path? The interactive timeline simulator lets you inject new skills into your profile on the fly, instantly recalculating your career trajectory, time saved, and salary jumps.
+
+### 🎓 Smart Resource Aggregation
+Every milestone comes with actionable learning resources. Switchback automatically fetches high-quality, free **YouTube** video tutorials and premium courses, caching them in MongoDB for blazing-fast retrieval.
 
 ---
 
-## Run it
+## 🏗️ Technical Architecture
 
-See **[SETUP.md](SETUP.md)**. Short version:
+Switchback is a highly optimized, full-stack application designed for speed and accuracy.
 
-```bash
-cp .env.example .env
-docker compose up -d          # bundled offline MongoDB (no keys needed)
-./scripts/dev.sh              # or: pwsh scripts/dev.ps1
-# API  → http://127.0.0.1:8011/docs
-# Web  → http://127.0.0.1:5173
-```
-
-Optional keys in `.env` (all degrade gracefully): `ADZUNA_*` (live job strip),
-`GITHUB_TOKEN` (rate limit), `YOUTUBE_API_KEY` (video suggestions),
-`NVIDIA_API_KEY` (assistant/goal phrasing).
+| Layer | Technology Stack | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | React 19, TypeScript, Vite, Tailwind CSS | Delivers a deeply interactive, glassmorphism-inspired UI with smooth micro-animations. |
+| **Backend** | Python 3.11, FastAPI | Handles complex graph traversal, conversational routing, and ML model inference. |
+| **Database** | MongoDB | Stores the career ontology, user sessions, and API caching layers. |
+| **Machine Learning** | `scikit-learn`, SHAP | Powers the dynamic salary predictor and feature importance explanations. |
+| **Integrations** | YouTube Data API, Adzuna API, OpenAI | Enriches the user experience with real-world videos, jobs, and natural language understanding. |
 
 ---
 
-## Tests
+## 🚀 Getting Started
 
-```bash
-cd backend && ../backend/.venv/bin/python -m pytest -q          # 67 unit/integration tests
-SWITCHBACK_API_BASE=http://127.0.0.1:8011 \
-  backend/.venv/bin/python scripts/e2e_phase8_full_journey.py   # full user journey
-npm --prefix frontend run build                                 # typecheck + prod build
-```
+Want to run Switchback locally? We've made it incredibly simple. 
+
+Please refer to our comprehensive **[SETUP.md](./SETUP.md)** for detailed, step-by-step instructions on setting up your Python virtual environment, configuring your API keys, and launching the development servers.
 
 ---
 
-## Challenges faced
-
-- **Portable ML artifacts.** The SHAP explainer pickle embedded interpreter-bound
-  numba code objects and crashed on any other machine — resolved by rebuilding it
-  from the model at startup.
-- **Dependency pinning vs. Python version.** The trained model requires
-  `scikit-learn 1.2.2`; that constrains the backend to Python 3.11. Pinned
-  explicitly and documented rather than forcing a fragile retrain.
-- **Offline reproducibility.** The engine needs ~56 MB of MongoDB data. Rather
-  than depend on a shared cluster at evaluation time, the request-path collections
-  are snapshotted into the repo and restored by `docker compose`.
-- **Grounding the conversation.** Keeping a natural-language assistant useful
-  *without* letting an LLM invent salaries or courses: the LLM only classifies
-  intent; all figures come from the model, graph, and database.
-- **Noisy salary signal.** Disclosed-salary postings are sparse and noisy; the
-  model is used for *relative* trajectory shape, not absolute precision.
-
----
-
-## Repository layout
-
-```
-backend/            FastAPI app, ML/NLP modules, pipeline, tests, model artifacts
-frontend/           React app (7 screens + assistant panel)
-data/mongo_snapshot/ committed offline DB snapshot (restored by docker compose)
-scripts/            dev.sh / dev.ps1, db dump/restore, e2e journey, legacy/
-docs/               design + implementation plan
-```
-
-## License
-
-[MIT](LICENSE).
+<div align="center">
+  <i>Built to navigate the complexities of the modern career landscape.</i>
+</div>

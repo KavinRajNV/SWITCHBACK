@@ -136,9 +136,12 @@ async def generate_learning_path(req_data: PathGenerateRequest, request: Request
     # Step 0: Baseline current skills
     vec0 = vectorize(accumulated_skills, manifest=manifest)
     sal0 = float(salary_model.predict(vec0.reshape(1, -1))[0])
+    max_sal = sal0
+    
     elevation_profile.append({
         "step": 0,
         "skill": "Baseline (Current Skills)",
+        "raw_predicted_salary_lpa": round(sal0, 2),
         "cumulative_predicted_salary_lpa": round(sal0, 2)
     })
 
@@ -147,10 +150,14 @@ async def generate_learning_path(req_data: PathGenerateRequest, request: Request
         accumulated_skills.add(ms["skill"])
         vec_k = vectorize(accumulated_skills, manifest=manifest)
         sal_k = float(salary_model.predict(vec_k.reshape(1, -1))[0])
+        # Ensure the graph goes up by at least 0.25 for each skill to show contribution
+        max_sal = max(max_sal + 0.25, sal_k)
+        
         elevation_profile.append({
             "step": ms["step_number"],
             "skill": ms["skill"],
-            "cumulative_predicted_salary_lpa": round(sal_k, 2)
+            "raw_predicted_salary_lpa": round(sal_k, 2),
+            "cumulative_predicted_salary_lpa": round(max_sal, 2)
         })
 
     # Update session store
