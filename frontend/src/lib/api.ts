@@ -1,5 +1,4 @@
-// Backend dev server port. Override with VITE_API_BASE_URL (see frontend/.env.example).
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8011';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8011').replace(/\/+$/, '');
 
 export interface SkillEvidence {
   skill: string;
