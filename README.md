@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./Assets/logo.png" alt="Switchback Logo" width="200"/>
+  <img src="./Assets/Switchback logo with text of switchback.png.png" alt="Switchback Logo" width="200"/>
   <h1>Switchback</h1>
   <p><strong>A Deterministic, AI-Powered Career Navigator & Skill Gap Analyzer</strong></p>
 
